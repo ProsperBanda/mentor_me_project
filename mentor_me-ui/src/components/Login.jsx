@@ -1,26 +1,47 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Login.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoginValidation from "./LoginValidation";
+import { UserContext } from "../../UserContext.js";
 
 function Login() {
-  const [values, setValues] = useState({
-    password: "",
-    email: "",
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { updateUser } = useContext(UserContext);
 
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
-  const handleInput = (event) => {
-    setValues((prev) => ({
-      ...prev,
-      [event.target.name]: [event.target.value],
-    }));
-  };
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setErrors(LoginValidation(values));
+    try {
+      // Make the login API request
+      const response = await fetch(`http://localhost:3000/users/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const loggedInUser = data.user;
+
+        updateUser(loggedInUser);
+
+        // Navigate to the home page after successful login
+        navigate("/home");
+      } else {
+        // Handle the login failure case
+        alert("Login failed");
+      }
+    } catch (error) {
+      // Handle any network or API request errors
+      alert("Login failed: " + error);
+    }
   };
 
   return (
@@ -40,7 +61,7 @@ function Login() {
       </div>
       <p className="welcome">Enter your Email and Password</p>
       <div className="user-information">
-        <form action="" onSubmit={handleSubmit}>
+        <form action="" onSubmit={handleLogin}>
           <div className="user-email">
             <label htmlFor="email">
               <strong>Email</strong>
@@ -49,7 +70,8 @@ function Login() {
               type="email"
               placeholder="Enter Email"
               name="email"
-              onChange={handleInput}
+              onChange={(e) => setEmail(e.target.value)}
+              required
             />
             {errors.email && (
               <span className="text-danger">{errors.email}</span>
@@ -63,7 +85,8 @@ function Login() {
               type="password"
               placeholder="Enter Password"
               name="password"
-              onChange={handleInput}
+              onChange={(e) => setPassword(e.target.value)}
+              required
             />
             {errors.password && (
               <span className="text-danger">{errors.password}</span>

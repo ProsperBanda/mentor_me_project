@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./Signup.css";
-import { Link } from "react-router-dom";
 import SignupValidation from "./SignupValidation";
+import { UserContext } from "../../UserContext.js";
 
 function Signup() {
-  const [values, setValues] = useState({
-    password: "",
-    email: "",
-    name: "",
-  });
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { updateUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const [errors, setErrors] = useState({});
 
@@ -19,9 +20,44 @@ function Signup() {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setErrors(SignupValidation(values));
+
+    try {
+      // Make the signup API request
+      const response = await fetch(`http://localhost:3000/users`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, email, password }),
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const loggedInUser = data.user;
+
+        console.log("Signup successful");
+
+        // Reset form fields
+        setUsername("");
+        setEmail("");
+        setPassword("");
+
+        // Update the user context
+        updateUser(loggedInUser);
+
+        // Navigate to the login page after successful signup
+        navigate("/login");
+      } else {
+        // Handle signup failure case
+        alert("Signup failed");
+      }
+    } catch (error) {
+      // Handle any network or API request errors
+      alert("Signup failed: " + error);
+    }
   };
 
   return (
@@ -37,8 +73,10 @@ function Signup() {
             <input
               type="text"
               placeholder="Enter Your Name"
+              value={username}
               name="name"
-              onChange={handleInput}
+              onChange={(e) => setUsername(e.target.value)}
+              required
             />
             {errors.name && <span className="text-danger">{errors.name}</span>}
           </div>
@@ -49,8 +87,10 @@ function Signup() {
             <input
               type="email"
               placeholder="Enter Email"
+              value={email}
               name="email"
-              onChange={handleInput}
+              onChange={(e) => setEmail(e.target.value)}
+              required
             />
             {errors.email && (
               <span className="text-danger">{errors.email}</span>
@@ -63,8 +103,10 @@ function Signup() {
             <input
               type="password"
               placeholder="Enter Password"
+              value={password}
               name="password"
-              onChange={handleInput}
+              onChange={(e) => setPassword(e.target.value)}
+              required
             />
             {errors.password && (
               <span className="text-danger">{errors.password}</span>
@@ -74,7 +116,7 @@ function Signup() {
             Sign up
           </button>
           <p>You agree to our terms and policies</p>
-          <Link to="/" className="login-btn">
+          <Link to="/login" className="login-btn">
             Login
           </Link>
         </form>
