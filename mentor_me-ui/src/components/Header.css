@@ -1,0 +1,28 @@
+.header-content {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: rgba(13, 70, 13, 0.401);
+  z-index: 999;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+}
+
+.profile-picture {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.logo img {
+  width: 100px;
+  height: 50px;
+}
