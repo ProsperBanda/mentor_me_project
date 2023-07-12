@@ -1,5 +1,14 @@
+import Header from "./Header";
+import ProfileSection from "./ProfileSection";
+import "./Home.css";
+
 function Home() {
-  return <p>Home Page/Dashboard</p>;
+  return (
+    <>
+      <Header />
+      <ProfileSection />
+    </>
+  );
 }
 
 export default Home;
