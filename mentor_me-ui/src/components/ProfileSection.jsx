@@ -8,16 +8,37 @@ const ProfileSection = () => {
   const [classification, setClassification] = useState("");
   const [bio, setBio] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     //I will perform actions with the data inputed
-    console.log("Form submitted", {
-      school,
-      major,
-      accountType,
-      classification,
-      bio,
-    });
+    try {
+      const response = await fetch("http://localhost:3000/profile", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          school,
+          major,
+          accountType,
+          classification,
+          bio,
+        }),
+      });
+      if (response.ok) {
+        const newProfile = await response.json();
+        console.log("New profile created: ", newProfile);
+      } else {
+        console.error("Failed to create profile");
+      }
+    } catch (error) {
+      console.error("Error: ", error);
+    }
+    setSchool("");
+    setMajor("");
+    setAccountType("");
+    setClassification("");
+    setBio("");
   };
 
   return (
