@@ -1,6 +1,11 @@
 .mentor-grid {
   display: grid;
-  gap: 100px;
-  padding: 16px;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 250px 250px 250px;
+  grid-auto-rows: 250px;
+  margin-top: 80px;
+  margin-right: 80px;
+  margin-left: 140px;
+  align-items: center;
+  justify-content: center;
+  gap: 80px;
 }
