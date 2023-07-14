@@ -6,6 +6,7 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import { UserContext } from "../UserContext";
 import MenteeDashboard from "./components/MenteeDashboard";
+import MentorDashboard from "./components/MentorDashboard";
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -32,6 +33,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/mentee" element={<MenteeDashboard />} />
+            <Route path="/mentor" element={<MentorDashboard />} />
           </Routes>
         </BrowserRouter>
       </UserContext.Provider>

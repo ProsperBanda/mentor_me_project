@@ -1,14 +1,21 @@
 nav {
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
   align-items: center;
-  padding: 16px;
+  padding: 20px 80px;
   background-color: rgba(13, 70, 13, 0.401);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1;
+  max-width: 1000px;
+  width: 1000px;
+  height: 80px;
+}
+
+.nav-content {
+  display: flex;
+  max-width: 1000px;
+  width: 100%;
+  margin-left: auto;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .profile-info {
