@@ -4,11 +4,13 @@ import "./NavBar.css";
 const NavBar = () => {
   return (
     <nav>
-      <div className="profile-info">
-        <img src="" alt="Profile" />
-        <p>Welcome, User!</p>
+      <div className="nav-content">
+        <div className="profile-info">
+          <img src="" alt="Profile" />
+          <p>Welcome, User!</p>
+        </div>
+        <img src="" alt="logo" className="logo" />
       </div>
-      <img src="" alt="logo" className="logo" />
     </nav>
   );
 };
