@@ -6,16 +6,18 @@
   background-color: #f0f0f0;
   position: fixed;
   left: 0;
-  top: 130px;
+  top: 0;
   bottom: 0;
 }
 
 .sidebar-button {
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  margin-top: 10px;
   padding: 8px 16px;
   background-color: #4caf50;
   color: #fff;
-  border: none;
   border-radius: 4px;
   cursor: pointer;
+  display: flex;
+  border-top: 40px;
 }

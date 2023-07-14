@@ -6,6 +6,7 @@ import { sequelize } from './database.js';
 import userRoutes from './routes/users.js';
 import profileRoutes from './routes/profile.js';
 import SequelizeStoreInit from 'connect-session-sequelize';
+import {User, userProfile} from './models/index.js';
 
 
 const app = express();
@@ -44,6 +45,19 @@ sessionStore.sync();
 
 app.use(userRoutes);
 app.use(profileRoutes);
+
+//Route to get all users with associated profiles
+app.get('/userprofile', async (req, res) => {
+  try {
+    const profiles = await userProfile.findAll({
+      include: [{ model: User, as: 'user'}],
+      order: [['createdAt', 'DESC']]
+    });
+    res.json(profiles);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 sequelize.sync({ alter: true })
   .then(() => {
