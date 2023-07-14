@@ -1,0 +1,6 @@
+.mentor-grid {
+  display: grid;
+  gap: 100px;
+  padding: 16px;
+  grid-template-columns: repeat(3, 1fr);
+}
