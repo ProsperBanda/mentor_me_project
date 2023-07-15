@@ -2,7 +2,7 @@ nav {
   display: flex;
   justify-content: end;
   align-items: center;
-  padding: 20px 80px;
+  padding: 0 100px 40px 100px;
   background-color: rgba(13, 70, 13, 0.401);
   max-width: 1000px;
   width: 1000px;

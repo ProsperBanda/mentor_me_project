@@ -1,1 +1,8 @@
-
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  margin-right: 120px;
+  padding: 0;
+  text-align: center;
+  border-top: 0;
+}
