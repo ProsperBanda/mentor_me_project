@@ -3,7 +3,7 @@ import MentorCard from "./MentorCard";
 import "./MentorGrid.css";
 import axios from "axios";
 
-const MentorGrid = ({ selectedMajor, selectedClassification }) => {
+const MentorGrid = ({ selectedMajor, selectedClassification, searchQuery }) => {
   const [mentors, setMentors] = useState([]);
 
   useEffect(() => {
@@ -13,31 +13,28 @@ const MentorGrid = ({ selectedMajor, selectedClassification }) => {
         const data = response.data;
         console.log(data);
 
-        // //Filter users based on the accountType to get mentors
-        // const mentorData = data.filter((user) => user.accountType === "Mentor");
-        // setMentors(mentorData);
-        // console.log(mentorData);
-
-        //Filter mentors based on selectedMajor and selectedClassification
         let filteredMentors = data.filter((mentor) => {
-          if (selectedMajor && mentor.major !== selectedMajor) {
-            return false;
-          }
           if (
-            selectedClassification &&
-            mentor.classification !== selectedClassification
+            (selectedMajor && mentor.major !== selectedMajor) ||
+            (selectedClassification &&
+              mentor.classification !== selectedClassification) ||
+            (searchQuery &&
+              !mentor.user.username
+                .toLowerCase()
+                .includes(searchQuery.toLowerCase()))
           ) {
             return false;
           }
           return true;
         });
+
         setMentors(filteredMentors);
       } catch (error) {
         console.error("Failed to fetch mentors", error);
       }
     };
     fetchMentors();
-  }, [selectedMajor, selectedClassification]);
+  }, [selectedMajor, selectedClassification, searchQuery]);
 
   return (
     <div className="mentor-grid">

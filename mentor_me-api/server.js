@@ -7,6 +7,7 @@ import userRoutes from './routes/users.js';
 import profileRoutes from './routes/profile.js';
 import SequelizeStoreInit from 'connect-session-sequelize';
 import {User, userProfile} from './models/index.js';
+import mentorsRoute from './routes/mentors.js'
 
 
 const app = express();
@@ -45,6 +46,7 @@ sessionStore.sync();
 
 app.use(userRoutes);
 app.use(profileRoutes);
+app.use(mentorsRoute);
 
 //Route to get all users with associated profiles
 app.get('/userprofile', async (req, res) => {

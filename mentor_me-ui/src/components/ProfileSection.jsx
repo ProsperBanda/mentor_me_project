@@ -10,7 +10,6 @@ const ProfileSection = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //I will perform actions with the data inputed
     try {
       const response = await fetch("http://localhost:3000/profile", {
         method: "POST",
