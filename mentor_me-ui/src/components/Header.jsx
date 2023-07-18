@@ -3,15 +3,15 @@ import "./Header.css";
 
 function Header() {
   return (
-    <div className="header-content">
-      <div className="profile">
-        <img src="" alt="Profile" className="profile-picture" />
-        <span className="welcome-text">Hello User</span>
+    <nav>
+      <div className="nav-content">
+        <div className="profile-info">
+          <img src="" alt="Profile" />
+          <p>Welcome, User!</p>
+        </div>
+        <img src="" alt="logo" className="logo" />
       </div>
-      <div className="logo">
-        <img src="" alt="logo" />
-      </div>
-    </div>
+    </nav>
   );
 }
 

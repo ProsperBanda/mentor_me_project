@@ -1,10 +1,41 @@
+#root {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
 .header-content {
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   display: flex;
   justify-content: end;
   align-items: center;
-  padding: 0 100px 40px 100px;
-  background-color: rgba(13, 70, 13, 0.401);
-  max-width: 1000px;
+  padding: 20px;
   width: 1000px;
   height: 80px;
+  background-color: #f8f8f8;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+}
+
+.profile-picture {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.welcome-text {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.logo img {
+  width: 80px;
 }
