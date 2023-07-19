@@ -49,7 +49,7 @@ function Signup() {
         updateUser(loggedInUser);
 
         // Navigate to the login page after successful signup
-        navigate("/login");
+        navigate("/");
       } else {
         // Handle signup failure case
         alert("Signup failed");
@@ -116,7 +116,7 @@ function Signup() {
             Sign up
           </button>
           <p>You agree to our terms and policies</p>
-          <Link to="/login" className="login-btn">
+          <Link to="/" className="login-btn">
             Login
           </Link>
         </form>

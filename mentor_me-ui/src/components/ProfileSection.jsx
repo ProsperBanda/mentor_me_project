@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./ProfileSection.css";
 import Trie from "../TrieDataStructure.js";
 import data from "../FormData.json";
+import { useNavigate } from "react-router-dom";
 
 const ProfileSection = () => {
   const [school, setSchool] = useState("");
@@ -75,6 +76,8 @@ const ProfileSection = () => {
     handleAutocomplete(inputValue, field);
   };
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -94,6 +97,10 @@ const ProfileSection = () => {
       if (response.ok) {
         const newProfile = await response.json();
         console.log("New profile created: ", newProfile);
+
+        //Navigate to the destination dashboard based on the accountType
+        const destination = accountType === "Mentor" ? "/mentor" : "/mentee";
+        navigate(destination);
       } else {
         console.error("Failed to create profile");
       }
