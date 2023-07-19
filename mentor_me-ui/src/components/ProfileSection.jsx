@@ -19,7 +19,7 @@ const ProfileSection = () => {
   );
 
   const [bio, setBio] = useState("");
-
+  const maxSuggestions = 5;
   const schoolTrie = new Trie();
   const majorTrie = new Trie();
   const accountTypeTrie = new Trie();
@@ -120,8 +120,8 @@ const ProfileSection = () => {
             onChange={(e) => handleInputChange(e, "school")}
           />
           {schoolSuggestions.length > 0 && (
-            <ul>
-              {schoolSuggestions.map((suggestion) => (
+            <ul className="dropdown-menu">
+              {schoolSuggestions.slice(0, maxSuggestions).map((suggestion) => (
                 <li
                   key={suggestion}
                   onClick={() => {
@@ -144,8 +144,8 @@ const ProfileSection = () => {
             onChange={(e) => handleInputChange(e, "major")}
           />
           {majorSuggestions.length > 0 && (
-            <ul>
-              {majorSuggestions.map((suggestion) => (
+            <ul className="dropdown-menu">
+              {majorSuggestions.slice(0, maxSuggestions).map((suggestion) => (
                 <li
                   key={suggestion}
                   onClick={() => {
@@ -168,18 +168,20 @@ const ProfileSection = () => {
             onChange={(e) => handleInputChange(e, "accountType")}
           />
           {accountTypeSuggestions.length > 0 && (
-            <ul>
-              {accountTypeSuggestions.map((suggestion) => (
-                <li
-                  key={suggestion}
-                  onClick={() => {
-                    setAccountType(suggestion);
-                    setAccountTypeSuggestions([]);
-                  }}
-                >
-                  {suggestion}
-                </li>
-              ))}
+            <ul className="dropdown-menu">
+              {accountTypeSuggestions
+                .slice(0, maxSuggestions)
+                .map((suggestion) => (
+                  <li
+                    key={suggestion}
+                    onClick={() => {
+                      setAccountType(suggestion);
+                      setAccountTypeSuggestions([]);
+                    }}
+                  >
+                    {suggestion}
+                  </li>
+                ))}
             </ul>
           )}
         </div>
@@ -192,18 +194,20 @@ const ProfileSection = () => {
             onChange={(e) => handleInputChange(e, "classification")}
           />
           {classificationSuggestions.length > 0 && (
-            <ul>
-              {classificationSuggestions.map((suggestion) => (
-                <li
-                  key={suggestion}
-                  onClick={() => {
-                    setClassification(suggestion);
-                    setClassificationSuggestions([]);
-                  }}
-                >
-                  {suggestion}
-                </li>
-              ))}
+            <ul className="dropdown-menu">
+              {classificationSuggestions
+                .slice(0, maxSuggestions)
+                .map((suggestion) => (
+                  <li
+                    key={suggestion}
+                    onClick={() => {
+                      setClassification(suggestion);
+                      setClassificationSuggestions([]);
+                    }}
+                  >
+                    {suggestion}
+                  </li>
+                ))}
             </ul>
           )}
         </div>
