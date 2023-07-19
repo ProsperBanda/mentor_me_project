@@ -19,7 +19,7 @@ const ProfileSection = () => {
   );
 
   const [bio, setBio] = useState("");
-
+  const maxSuggestions = 5;
   const schoolTrie = new Trie();
   const majorTrie = new Trie();
   const accountTypeTrie = new Trie();
@@ -121,7 +121,7 @@ const ProfileSection = () => {
           />
           {schoolSuggestions.length > 0 && (
             <ul className="dropdown-menu">
-              {schoolSuggestions.slice(0, 5).map((suggestion) => (
+              {schoolSuggestions.slice(0, maxSuggestions).map((suggestion) => (
                 <li
                   key={suggestion}
                   onClick={() => {
@@ -145,7 +145,7 @@ const ProfileSection = () => {
           />
           {majorSuggestions.length > 0 && (
             <ul className="dropdown-menu">
-              {majorSuggestions.slice(0, 5).map((suggestion) => (
+              {majorSuggestions.slice(0, maxSuggestions).map((suggestion) => (
                 <li
                   key={suggestion}
                   onClick={() => {
@@ -169,17 +169,19 @@ const ProfileSection = () => {
           />
           {accountTypeSuggestions.length > 0 && (
             <ul className="dropdown-menu">
-              {accountTypeSuggestions.slice(0, 5).map((suggestion) => (
-                <li
-                  key={suggestion}
-                  onClick={() => {
-                    setAccountType(suggestion);
-                    setAccountTypeSuggestions([]);
-                  }}
-                >
-                  {suggestion}
-                </li>
-              ))}
+              {accountTypeSuggestions
+                .slice(0, maxSuggestions)
+                .map((suggestion) => (
+                  <li
+                    key={suggestion}
+                    onClick={() => {
+                      setAccountType(suggestion);
+                      setAccountTypeSuggestions([]);
+                    }}
+                  >
+                    {suggestion}
+                  </li>
+                ))}
             </ul>
           )}
         </div>
@@ -193,17 +195,19 @@ const ProfileSection = () => {
           />
           {classificationSuggestions.length > 0 && (
             <ul className="dropdown-menu">
-              {classificationSuggestions.slice(0, 5).map((suggestion) => (
-                <li
-                  key={suggestion}
-                  onClick={() => {
-                    setClassification(suggestion);
-                    setClassificationSuggestions([]);
-                  }}
-                >
-                  {suggestion}
-                </li>
-              ))}
+              {classificationSuggestions
+                .slice(0, maxSuggestions)
+                .map((suggestion) => (
+                  <li
+                    key={suggestion}
+                    onClick={() => {
+                      setClassification(suggestion);
+                      setClassificationSuggestions([]);
+                    }}
+                  >
+                    {suggestion}
+                  </li>
+                ))}
             </ul>
           )}
         </div>
