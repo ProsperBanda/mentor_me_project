@@ -1,7 +1,7 @@
 import React from "react";
 
 const MentorCard = ({ mentor }) => {
-  const username = mentor.username;
+  const username = mentor.user.username;
   const { school, major, classification, bio } = mentor;
   return (
     <div className="mentor-card">
