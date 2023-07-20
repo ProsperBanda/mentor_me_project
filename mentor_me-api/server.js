@@ -8,6 +8,8 @@ import profileRoutes from "./routes/profile.js";
 import SequelizeStoreInit from "connect-session-sequelize";
 import { User, userProfile } from "./models/index.js";
 import mentorsRoute from "./routes/mentors.js";
+import mentorshipResponse from "./models/mentorshipResponse.js";
+import mentorshipRequest from "./models/mentorshipRequest.js";
 
 const app = express();
 
