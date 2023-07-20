@@ -10,6 +10,8 @@ import { User, userProfile } from "./models/index.js";
 import mentorsRoute from "./routes/mentors.js";
 import mentorshipResponse from "./models/mentorshipResponse.js";
 import mentorshipRequest from "./models/mentorshipRequest.js";
+import mentorshipRequestRoutes from "./routes/mentorshipRequestRoute.js";
+import mentorshipResponseRoutes from "./routes/mentorshipResponseRoute.js";
 
 const app = express();
 
@@ -50,6 +52,8 @@ sessionStore.sync();
 app.use(userRoutes);
 app.use(profileRoutes);
 app.use(mentorsRoute);
+app.use(mentorshipRequestRoutes);
+app.use(mentorshipResponseRoutes);
 
 //Route to get all users with associated profiles
 app.get("/userprofile", async (req, res) => {
