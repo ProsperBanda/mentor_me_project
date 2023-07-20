@@ -1,8 +1,8 @@
 import React from "react";
 
 const MentorCard = ({ mentor }) => {
-  const username = mentor.user.username;
-  const { school, major, classification, bio } = mentor;
+  const username = mentor.username;
+  const { school, major, classification, bio } = mentor.userprofile;
   return (
     <div className="mentor-card">
       <img src="" alt="Mentor" />

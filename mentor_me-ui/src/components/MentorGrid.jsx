@@ -9,17 +9,17 @@ const MentorGrid = ({ selectedMajor, selectedClassification, searchQuery }) => {
   useEffect(() => {
     const fetchMentors = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/userprofile");
+        const response = await axios.get("http://localhost:3000/mentors");
         const data = response.data;
         console.log(data);
 
         let filteredMentors = data.filter((mentor) => {
           if (
-            (selectedMajor && mentor.major !== selectedMajor) ||
+            (selectedMajor && mentor.userprofile.major !== selectedMajor) ||
             (selectedClassification &&
-              mentor.classification !== selectedClassification) ||
+              mentor.userprofile.classification !== selectedClassification) ||
             (searchQuery &&
-              !mentor.user.username
+              !mentor.username
                 .toLowerCase()
                 .includes(searchQuery.toLowerCase()))
           ) {
