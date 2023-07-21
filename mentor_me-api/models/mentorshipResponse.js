@@ -17,7 +17,7 @@ export const mentorshipResponse = sequelize.define("mentorshipResponse", {
 
 //Associations
 mentorshipResponse.belongsTo(mentorshipRequest, {
-  foreignKey: "mentorshipRequestID",
+  foreignKey: "requestID",
 });
 mentorshipResponse.belongsTo(userProfile, { foreignKey: "MentorID" });
 
