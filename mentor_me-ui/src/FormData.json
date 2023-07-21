@@ -69,9 +69,13 @@
     "University of Georgia",
     "University of Arizona",
     "University of Rochester",
-    "Boston University"
+    "Boston University",
+    "NUST"
   ],
-  "accountTypes": ["Mentor", "Mentee"],
+  "accountTypes": [
+    "Mentor",
+    "Mentee"
+  ],
   "classifications": [
     "Freshman",
     "Sophomore",

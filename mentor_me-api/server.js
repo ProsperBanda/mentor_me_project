@@ -12,6 +12,7 @@ import mentorshipResponse from "./models/mentorshipResponse.js";
 import mentorshipRequest from "./models/mentorshipRequest.js";
 import mentorshipRequestRoutes from "./routes/mentorshipRequestRoute.js";
 import mentorshipResponseRoutes from "./routes/mentorshipResponseRoute.js";
+import fs from "fs";
 
 const app = express();
 
@@ -66,6 +67,55 @@ app.get("/userprofile", async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
+});
+
+//Route to update the JSON file with new words
+app.post("/update-words", (req, res) => {
+  const { field, word } = req.body;
+  console.log(req);
+
+  //Making sure that the field and word are provided in the request body
+  if (!field || !word) {
+    return res.status(400).json({ message: "Field and word are required." });
+  }
+  //Load the JSON file
+  const jsonDataPath =
+    "/Users/prosperbanda/Desktop/mentor_me_project/mentor_me-ui/src/FormData.json";
+  fs.readFile(jsonDataPath, "utf8", (err, data) => {
+    if (err) {
+      console.error("Error reading JSON file:", err);
+      return res.status(500).json({ message: "Internal server error." });
+    }
+
+    try {
+      const jsonData = JSON.parse(data);
+
+      //Ensure that the field exist in the JSON data
+      if (!(field in jsonData)) {
+        return res.status(400).json({ message: "Invalid field." });
+      }
+      // Check if the word already exists in the field
+      if (!jsonData[field].includes(word)) {
+        jsonData[field].push(word);
+        console.log("MyData", jsonData);
+
+        // Save the updated JSON data to the file
+        fs.writeFile(jsonDataPath, JSON.stringify(jsonData, null, 2), (err) => {
+          if (err) {
+            console.error("Error writing to JSON file:", err);
+            return res.status(500).json({ message: "Internal server error." });
+          }
+
+          return res.status(200).json({ message: "Word added successfully." });
+        });
+      } else {
+        return res.status(200).json({ message: "Word already exists." });
+      }
+    } catch (error) {
+      console.error("Error parsing JSON:", error);
+      return res.status(500).json({ message: "Internal server error." });
+    }
+  });
 });
 
 sequelize
