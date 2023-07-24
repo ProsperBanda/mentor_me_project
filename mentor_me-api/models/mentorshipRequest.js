@@ -6,7 +6,6 @@ export const mentorshipRequest = sequelize.define("mentorshipRequest", {
   RequestID: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    autoIncrement: true,
   },
   Status: {
     type: DataTypes.ENUM("Accepted", "Declined", "Pending"),

@@ -7,7 +7,6 @@ export const mentorshipResponse = sequelize.define("mentorshipResponse", {
   ResponseID: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    autoIncrement: true,
   },
   Status: {
     type: DataTypes.ENUM("Accepted", "Declined", "Pending"),

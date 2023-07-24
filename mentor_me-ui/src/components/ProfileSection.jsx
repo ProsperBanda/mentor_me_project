@@ -119,6 +119,9 @@ const ProfileSection = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const id = 17;
+    localStorage.setItem("menteeID", id);
+
     try {
       if (school && !schoolTrie.search(school).includes(school)) {
         addNewWord(school, "school");

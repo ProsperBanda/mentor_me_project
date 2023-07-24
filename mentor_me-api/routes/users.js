@@ -5,6 +5,8 @@ import { Op } from "sequelize";
 
 const router = express.Router();
 
+let newUserObj = { id: null };
+
 // Route for user registration
 router.post("/users", async (req, res) => {
   const { username, password, email } = req.body;
@@ -32,6 +34,11 @@ router.post("/users", async (req, res) => {
       password: hashedPassword,
       email,
     });
+
+    newUserObj = newUser.id;
+
+    //Seal the newUser object
+    Object.seal(newUserObj);
 
     // Set the user in the session
     req.session.user = newUser;
@@ -65,6 +72,7 @@ router.post("/users/login", async (req, res) => {
 
     // Set the user in the session
     req.session.user = user;
+    console.log("Login was successful!");
 
     // Return the user data in the response
     res.json({ user });
@@ -75,3 +83,4 @@ router.post("/users/login", async (req, res) => {
 });
 
 export default router;
+export { newUserObj };

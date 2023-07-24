@@ -70,12 +70,10 @@
     "University of Arizona",
     "University of Rochester",
     "Boston University",
-    "NUST"
+    "NUST",
+    "The New University"
   ],
-  "accountTypes": [
-    "Mentor",
-    "Mentee"
-  ],
+  "accountTypes": ["Mentor", "Mentee"],
   "classifications": [
     "Freshman",
     "Sophomore",
