@@ -35,7 +35,9 @@ router.post("/users", async (req, res) => {
       email,
     });
 
-    newUserObj = newUser.id;
+    newUserObj.id = newUser.id;
+    // localStorage.setItem("id", newUser.id);
+    console.log(newUser.id);
 
     //Seal the newUser object
     Object.seal(newUserObj);
@@ -72,6 +74,8 @@ router.post("/users/login", async (req, res) => {
 
     // Set the user in the session
     req.session.user = user;
+    // localStorage.setItem("id", user.id);
+    console.log("aaaaaa", user.id);
     console.log("Login was successful!");
 
     // Return the user data in the response

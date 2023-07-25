@@ -3,18 +3,23 @@ import { sequelize } from "../database.js";
 import { userProfile } from "./userProfile.js";
 
 export const mentorshipRequest = sequelize.define("mentorshipRequest", {
-  RequestID: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-  },
   Status: {
     type: DataTypes.ENUM("Accepted", "Declined", "Pending"),
+    allowNull: false,
+  },
+  MentorID: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  MenteeID: {
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
 });
 
 //Associations
-mentorshipRequest.belongsTo(userProfile, { foreignKey: "MenteeID" });
-mentorshipRequest.belongsTo(userProfile, { foreignKey: "MentorID" });
+userProfile.hasMany(mentorshipRequest);
+mentorshipRequest.belongsTo(userProfile, { foreignKey: "userId" });
+// mentorshipRequest.belongsTo(userProfile, { foreignKey: "MentorID" });
 
 export default mentorshipRequest;
