@@ -29,7 +29,7 @@ function Login() {
       if (response.ok) {
         const data = await response.json();
         const loggedInUser = data.user;
-
+        localStorage.setItem("id", loggedInUser.id);
         updateUser(loggedInUser);
 
         // Navigate to the home page after successful login

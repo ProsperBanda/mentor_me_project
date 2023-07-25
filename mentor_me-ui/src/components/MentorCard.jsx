@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { newUserObj } from "../../../mentor_me-api/routes/users.js";
+// import { newUserObj } from "../../../mentor_me-api/routes/users.js";
 
 const MentorCard = ({ mentor }) => {
   const username = mentor.username;
@@ -10,7 +10,8 @@ const MentorCard = ({ mentor }) => {
 
   const handleMentorshipRequest = async () => {
     try {
-      const menteeID = newUserObj.id;
+      const menteeID = localStorage.getItem("id");
+      // const menteeID = 1;
       console.log("MenteeID: ", menteeID);
 
       //Make the API call to send a mentorship request

@@ -71,9 +71,13 @@
     "University of Rochester",
     "Boston University",
     "NUST",
-    "The New University"
+    "The New University",
+    "Alabama A & M University"
   ],
-  "accountTypes": ["Mentor", "Mentee"],
+  "accountTypes": [
+    "Mentor",
+    "Mentee"
+  ],
   "classifications": [
     "Freshman",
     "Sophomore",
