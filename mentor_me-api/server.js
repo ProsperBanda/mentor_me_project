@@ -8,6 +8,7 @@ import profileRoutes from "./routes/profile.js";
 import SequelizeStoreInit from "connect-session-sequelize";
 import { User, userProfile } from "./models/index.js";
 import mentorsRoute from "./routes/mentors.js";
+import requestsRoute from "./routes/requests.js";
 import mentorshipResponse from "./models/mentorshipResponse.js";
 import mentorshipRequest from "./models/mentorshipRequest.js";
 import mentorshipRequestRoutes from "./routes/mentorshipRequestRoute.js";
@@ -55,6 +56,7 @@ app.use(profileRoutes);
 app.use(mentorsRoute);
 app.use(mentorshipRequestRoutes);
 app.use(mentorshipResponseRoutes);
+app.use(requestsRoute);
 
 //Route to get all users with associated profiles
 app.get("/userprofile", async (req, res) => {
