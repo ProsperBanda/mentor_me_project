@@ -6,7 +6,6 @@ const router = express.Router();
 
 //Route to create new profile
 router.post("/profile", async (req, res) => {
-  console.log("The Body:", req.body);
   try {
     const { school, major, accountType, classification, bio, userId } =
       req.body;
@@ -19,7 +18,6 @@ router.post("/profile", async (req, res) => {
       bio,
       userId,
     });
-    console.log(newProfile);
     res.json({ profile: newProfile });
   } catch (error) {
     console.log(error);

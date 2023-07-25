@@ -119,13 +119,11 @@ const ProfileSection = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // localStorage.setItem("ID",id);
 
     try {
       if (school && !schoolTrie.search(school).includes(school)) {
         addNewWord(school, "school");
         addNewWordToJSON(school, "schools");
-        console.log(data);
       }
 
       if (major && !majorTrie.search(major).includes(major)) {

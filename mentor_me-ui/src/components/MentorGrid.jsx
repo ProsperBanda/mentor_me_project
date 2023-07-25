@@ -11,7 +11,6 @@ const MentorGrid = ({ selectedMajor, selectedClassification, searchQuery }) => {
       try {
         const response = await axios.get("http://localhost:3000/mentors");
         const data = response.data;
-        console.log(data);
 
         let filteredMentors = data.filter((mentor) => {
           if (

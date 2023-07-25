@@ -37,8 +37,6 @@ function Signup() {
       if (response.ok) {
         const data = await response.json();
         const loggedInUser = data.user;
-        console.log("loggedInUser:", loggedInUser);
-        console.log("Signup successful");
         localStorage.setItem("id", loggedInUser.id);
         // Reset form fields
         setUsername("");

@@ -72,7 +72,6 @@ app.get("/userprofile", async (req, res) => {
 //Route to update the JSON file with new words
 app.post("/update-words", (req, res) => {
   const { field, word } = req.body;
-  console.log(req);
 
   //Making sure that the field and word are provided in the request body
   if (!field || !word) {
@@ -97,7 +96,6 @@ app.post("/update-words", (req, res) => {
       // Check if the word already exists in the field
       if (!jsonData[field].includes(word)) {
         jsonData[field].push(word);
-        console.log("MyData", jsonData);
 
         // Save the updated JSON data to the file
         fs.writeFile(jsonDataPath, JSON.stringify(jsonData, null, 2), (err) => {
