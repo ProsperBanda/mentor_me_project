@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database.js";
 import { userProfile } from "./userProfile.js";
+import { User } from "./user.js";
 
 export const mentorshipRequest = sequelize.define("mentorshipRequest", {
   Status: {
@@ -18,8 +19,7 @@ export const mentorshipRequest = sequelize.define("mentorshipRequest", {
 });
 
 //Associations
-userProfile.hasMany(mentorshipRequest);
-mentorshipRequest.belongsTo(userProfile, { foreignKey: "userId" });
-// mentorshipRequest.belongsTo(userProfile, { foreignKey: "MentorID" });
+User.hasMany(mentorshipRequest);
+mentorshipRequest.belongsTo(User, { foreignKey: "MenteeID" });
 
 export default mentorshipRequest;
