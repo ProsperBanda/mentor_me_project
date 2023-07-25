@@ -26,6 +26,49 @@ const ProfileSection = () => {
   const accountTypeTrie = new Trie();
   const classificationTrie = new Trie();
 
+  const addNewWordToJSON = async (word, field) => {
+    try {
+      const response = await fetch("http://localhost:3000/update-words", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          field,
+          word,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data.message);
+      } else {
+        console.error("Failed to add word to JSON.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const addNewWord = (word, field) => {
+    switch (field) {
+      case "school":
+        schoolTrie.insert(word);
+        break;
+      case "major":
+        majorTrie.insert(word);
+        break;
+      case "accountType":
+        accountTypeTrie.insert(word);
+        break;
+      case "classification":
+        classificationTrie.insert(word);
+        break;
+      default:
+        break;
+    }
+  };
+
   // With the data from the JSON file, populate the corresponding Trie
   useEffect(() => {
     populateTries();
@@ -45,25 +88,21 @@ const ProfileSection = () => {
       case "school":
         setSchool(inputValue);
         suggestions = schoolTrie.search(inputValue);
-        console.log(suggestions);
         setSchoolSuggestions(suggestions);
         break;
       case "major":
         setMajor(inputValue);
         suggestions = majorTrie.search(inputValue);
-        console.log(suggestions);
         setMajorSuggestions(suggestions);
         break;
       case "accountType":
         setAccountType(inputValue);
         suggestions = accountTypeTrie.search(inputValue);
-        console.log(suggestions);
         setAccountTypeSuggestions(suggestions);
         break;
       case "classification":
         setClassification(inputValue);
         suggestions = classificationTrie.search(inputValue);
-        console.log(suggestions);
         setClassificationSuggestions(suggestions);
         break;
       default:
@@ -81,6 +120,33 @@ const ProfileSection = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      if (school && !schoolTrie.search(school).includes(school)) {
+        addNewWord(school, "school");
+        addNewWordToJSON(school, "schools");
+        console.log(data);
+      }
+
+      if (major && !majorTrie.search(major).includes(major)) {
+        addNewWord(major, "major");
+        addNewWordToJSON(major, "major");
+      }
+
+      if (
+        accountType &&
+        !accountTypeTrie.search(accountType).includes(accountType)
+      ) {
+        addNewWord(accountType, "accountType");
+        addNewWordToJSON(accountType, "accountType");
+      }
+
+      if (
+        classification &&
+        !classificationTrie.search(classification).includes(classification)
+      ) {
+        addNewWord(classification, "classification");
+        addNewWordToJSON(classification, "classification");
+      }
+
       const response = await fetch("http://localhost:3000/profile", {
         method: "POST",
         headers: {
