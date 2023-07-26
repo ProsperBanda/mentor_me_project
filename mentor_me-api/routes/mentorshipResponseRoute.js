@@ -1,5 +1,4 @@
 import express from "express";
-import { userProfile } from "../models/userProfile.js";
 import { mentorshipResponse } from "../models/mentorshipResponse.js";
 import mentorshipRequest from "../models/mentorshipRequest.js";
 
@@ -10,11 +9,6 @@ router.post("/:requestID/accept", async (req, res) => {
   try {
     const { requestID } = req.params;
     console.log("RequestID:", requestID);
-
-    //Get mentorID from form user's profile
-    // const mentorID = req.session.user.id;
-    // const mentorID = newUserObj.id;
-    // console.log("MentorID", mentorID);
 
     //Find the mentorship request by ID
     const request = await mentorshipRequest.findByPk(requestID);
@@ -30,7 +24,6 @@ router.post("/:requestID/accept", async (req, res) => {
     //Response record
     const response = await mentorshipResponse.create({
       requestID: requestID,
-      //   MentorID: mentorID,
       Status: "Accepted",
     });
 
@@ -46,9 +39,6 @@ router.post("/:requestID/decline", async (req, res) => {
   try {
     const { requestID } = req.params;
 
-    //Get mentorID from the user's profile
-    // const mentorID = req.session.user.id;
-
     //Find the request by ID
     const request = await mentorshipRequest.findByPk(requestID);
 
@@ -63,7 +53,6 @@ router.post("/:requestID/decline", async (req, res) => {
     //Response record
     const response = await mentorshipResponse.create({
       requestID: requestID,
-      //   MentorID: mentorID,
       Status: "Declined",
     });
 

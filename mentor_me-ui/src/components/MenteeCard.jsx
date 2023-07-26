@@ -8,7 +8,7 @@ const MenteeCard = ({ mentee }) => {
   const handleAcceptRequest = async () => {
     try {
       const mentorID = localStorage.getItem("id");
-      console.log("MentorID: ", mentorID);
+
       //Send a request to the backend to accept mentorship request
       await axios.post(`http://localhost:3000/${id}/accept`);
     } catch (error) {

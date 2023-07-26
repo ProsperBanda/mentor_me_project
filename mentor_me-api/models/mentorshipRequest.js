@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database.js";
-import { userProfile } from "./userProfile.js";
 import { User } from "./user.js";
 
 export const mentorshipRequest = sequelize.define("mentorshipRequest", {

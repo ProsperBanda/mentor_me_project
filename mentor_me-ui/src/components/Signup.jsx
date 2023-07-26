@@ -10,15 +10,6 @@ function Signup() {
   const { updateUser } = useContext(UserContext);
   const navigate = useNavigate();
 
-  const [errors, setErrors] = useState({});
-
-  const handleInput = (event) => {
-    setValues((prev) => ({
-      ...prev,
-      [event.target.name]: [event.target.value],
-    }));
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -37,9 +28,6 @@ function Signup() {
         const data = await response.json();
         const loggedInUser = data.user;
         localStorage.setItem("id", loggedInUser.id);
-        console.log("UserID:", loggedInUser.id);
-        // console.log("USERID:", loggedInUser.id);
-        // localStorage.setItem("userId", loggedInUser.id);
         // Reset form fields
         setUsername("");
         setEmail("");
