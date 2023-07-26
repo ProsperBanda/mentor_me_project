@@ -20,12 +20,30 @@ const MenteeGrid = () => {
       }
     };
     fetchMentorshipRequests();
-  });
+  }, []);
   return (
     <div className="mentee-grid">
-      {mentorshipRequests.map((request) => (
-        <MenteeCard key={request.id} request={request} />
-      ))}
+      {mentorshipRequests.map((request) => {
+        //Extract data
+        const { Status, id, User } = request;
+        const { username, email, userprofile } = User;
+        const { school, major, classification, bio } = userprofile;
+        return (
+          <MenteeCard
+            key={id}
+            mentee={{
+              Status,
+              id,
+              username,
+              email,
+              school,
+              major,
+              classification,
+              bio,
+            }}
+          />
+        );
+      })}
     </div>
   );
 };

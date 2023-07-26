@@ -1,7 +1,13 @@
 import React from "react";
 import axios from "axios";
 
-const MenteeCard = ({ request }) => {
+const MenteeCard = ({ mentee }) => {
+  const { status } = mentee;
+  console.log("Request: ", mentee);
+  // const { username } = User;
+  // const { school, major, classification, bio } = User.userprofile;
+  const { Status, username, school, major, classification, bio } = mentee;
+
   const handleAcceptRequest = async () => {
     try {
       //Send a request to the backend to accept mentorship request
@@ -21,13 +27,13 @@ const MenteeCard = ({ request }) => {
   return (
     <div className="mentee-card">
       <img src="" alt="Mentee" />
-      <h3>{request.mentee.username}</h3>
-      <p>bio: {request.mentee.bio}</p>
-      <p>Major: {request.mentee.major}</p>
-      <p>School: {request.mentee.school}</p>
-      <p>Status: {request.status}</p>
-      <p>Classification: {mentee.classification}</p>
-      {request.status === "Pending" && (
+      <h3>{username}</h3>
+      <p>bio: {bio}</p>
+      <p>Major: {major}</p>
+      <p>School: {school}</p>
+      <p>Status: {Status}</p>
+      <p>Classification: {classification}</p>
+      {Status === "Pending" && (
         <>
           <button onClick={handleAcceptRequest}>Accept</button>
           <button onClick={handleDeclineRequest}>Decline</button>
