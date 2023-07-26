@@ -8,7 +8,6 @@ const router = express.Router();
 router.get("/mentors", async (req, res) => {
   try {
     const { major, classification } = req.query;
-
     const filters = {};
     if (major) {
       filters.major = major;

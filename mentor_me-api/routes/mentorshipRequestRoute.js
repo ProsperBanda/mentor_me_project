@@ -4,7 +4,7 @@ import { mentorshipRequest } from "../models/mentorshipRequest.js";
 
 const router = express.Router();
 
-//Rooute to handle sending a mentorship request
+//Route to handle sending a mentorship request
 router.post("/request", async (req, res) => {
   try {
     //Get mentorID and menteeID from the body

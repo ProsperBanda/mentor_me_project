@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
-import LoginValidation from "./LoginValidation";
 import { UserContext } from "../../UserContext.js";
 
 function Login() {
@@ -29,7 +28,7 @@ function Login() {
       if (response.ok) {
         const data = await response.json();
         const loggedInUser = data.user;
-
+        localStorage.setItem("id", loggedInUser.id);
         updateUser(loggedInUser);
 
         // Navigate to the home page after successful login

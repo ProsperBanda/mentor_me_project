@@ -4,17 +4,11 @@ import mentorshipRequest from "./mentorshipRequest.js";
 import { userProfile } from "./userProfile.js";
 
 export const mentorshipResponse = sequelize.define("mentorshipResponse", {
-  ResponseID: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
   Status: {
     type: DataTypes.ENUM("Accepted", "Declined", "Pending"),
     allowNull: false,
   },
 });
-
 //Associations
 mentorshipResponse.belongsTo(mentorshipRequest, {
   foreignKey: "requestID",

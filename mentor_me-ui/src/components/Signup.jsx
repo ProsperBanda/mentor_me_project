@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Signup.css";
-import SignupValidation from "./SignupValidation";
 import { UserContext } from "../../UserContext.js";
 
 function Signup() {
@@ -37,9 +36,7 @@ function Signup() {
       if (response.ok) {
         const data = await response.json();
         const loggedInUser = data.user;
-
-        console.log("Signup successful");
-
+        localStorage.setItem("id", loggedInUser.id);
         // Reset form fields
         setUsername("");
         setEmail("");

@@ -119,11 +119,11 @@ const ProfileSection = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       if (school && !schoolTrie.search(school).includes(school)) {
         addNewWord(school, "school");
         addNewWordToJSON(school, "schools");
-        console.log(data);
       }
 
       if (major && !majorTrie.search(major).includes(major)) {
@@ -146,7 +146,7 @@ const ProfileSection = () => {
         addNewWord(classification, "classification");
         addNewWordToJSON(classification, "classification");
       }
-
+      let userId = localStorage.getItem("id");
       const response = await fetch("http://localhost:3000/profile", {
         method: "POST",
         headers: {
@@ -158,6 +158,7 @@ const ProfileSection = () => {
           accountType,
           classification,
           bio,
+          userId,
         }),
       });
       if (response.ok) {
