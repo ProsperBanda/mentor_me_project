@@ -7,9 +7,8 @@ const router = express.Router();
 //Route to create new profile
 router.post("/profile", async (req, res) => {
   try {
-    const { school, major, accountType, classification, bio, userId } =
-      req.body;
-    // const userId = newUserObj.id;
+    const { school, major, accountType, classification, bio } = req.body;
+    const userId = newUserObj.id;
     const newProfile = await userProfile.create({
       school,
       major,
