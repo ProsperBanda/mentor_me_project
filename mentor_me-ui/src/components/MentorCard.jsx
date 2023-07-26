@@ -10,6 +10,7 @@ const MentorCard = ({ mentor }) => {
   const handleMentorshipRequest = async () => {
     try {
       const menteeID = localStorage.getItem("id");
+      console.log("MenteeID: ", menteeID);
 
       //Make the API call to send a mentorship request
       const response = await axios.post("http://localhost:3000/request", {
