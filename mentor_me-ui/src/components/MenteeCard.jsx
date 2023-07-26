@@ -2,12 +2,15 @@ import React from "react";
 import axios from "axios";
 
 const MenteeCard = ({ mentee }) => {
-  const { Status, username, school, major, classification, bio } = mentee;
+  const { id, Status, username, school, major, classification, bio } = mentee;
+  console.log(mentee);
 
   const handleAcceptRequest = async () => {
     try {
+      // const mentorID = localStorage.getItem("id");
+      // console.log("MentorID: ", mentorID);
       //Send a request to the backend to accept mentorship request
-      await axios.post("http://localhost:3000/:requestID/accept");
+      await axios.post(`http://localhost:3000/${id}/accept`);
     } catch (error) {
       console.error("Error accepting mentorship request:", error);
     }
@@ -15,7 +18,7 @@ const MenteeCard = ({ mentee }) => {
   const handleDeclineRequest = async () => {
     try {
       //Send request to the backend to decline mentorship request
-      await axios.post("http://localhost:3000/:requestID/decline");
+      await axios.post(`http://localhost:3000/${id}/decline`);
     } catch (error) {
       console.error("Error declining mentorship request:", error);
     }

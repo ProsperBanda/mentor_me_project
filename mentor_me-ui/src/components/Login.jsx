@@ -28,7 +28,7 @@ function Login() {
       if (response.ok) {
         const data = await response.json();
         const loggedInUser = data.user;
-        localStorage.setItem("id", loggedInUser.id);
+        // localStorage.setItem("id", loggedInUser.id);
         // localStorage.setItem("userId", loggedInUser.id);
         updateUser(loggedInUser);
 
