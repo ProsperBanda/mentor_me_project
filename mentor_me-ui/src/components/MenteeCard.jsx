@@ -2,10 +2,6 @@ import React from "react";
 import axios from "axios";
 
 const MenteeCard = ({ mentee }) => {
-  const { status } = mentee;
-  console.log("Request: ", mentee);
-  // const { username } = User;
-  // const { school, major, classification, bio } = User.userprofile;
   const { Status, username, school, major, classification, bio } = mentee;
 
   const handleAcceptRequest = async () => {

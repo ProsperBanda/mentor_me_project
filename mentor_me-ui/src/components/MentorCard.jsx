@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-// import { newUserObj } from "../../../mentor_me-api/routes/users.js";
 
 const MentorCard = ({ mentor }) => {
   const username = mentor.username;

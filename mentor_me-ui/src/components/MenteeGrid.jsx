@@ -13,7 +13,6 @@ const MenteeGrid = () => {
         const response = await axios.get(
           "http://localhost:3000/mentorship-requests"
         );
-        console.log("Response:", response);
         setMentorshipRequests(response.data);
       } catch (error) {
         console.error("Error fetching mentorship requests:", error);
