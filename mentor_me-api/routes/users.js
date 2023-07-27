@@ -35,11 +35,6 @@ router.post("/users", async (req, res) => {
       email,
     });
 
-    newUserObj.id = newUser.id;
-
-    //Seal the newUser object
-    Object.seal(newUserObj);
-
     // Set the user in the session
     req.session.user = newUser;
 
@@ -72,6 +67,10 @@ router.post("/users/login", async (req, res) => {
 
     // Set the user in the session
     req.session.user = user;
+
+    newUserObj.id = user.id;
+    Object.seal(newUserObj);
+
     // Return the user data in the response
     res.json({ user });
   } catch (error) {

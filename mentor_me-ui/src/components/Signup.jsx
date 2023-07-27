@@ -10,15 +10,6 @@ function Signup() {
   const { updateUser } = useContext(UserContext);
   const navigate = useNavigate();
 
-  const [errors, setErrors] = useState({});
-
-  const handleInput = (event) => {
-    setValues((prev) => ({
-      ...prev,
-      [event.target.name]: [event.target.value],
-    }));
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 

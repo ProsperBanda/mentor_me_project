@@ -6,6 +6,7 @@ const MentorCard = ({ mentor }) => {
   const { school, major, classification, bio } = mentor.userprofile;
 
   const [requestStatus, setRequestStatus] = useState("Request");
+  const [isButtonDisabled, setButtonDisabled] = useState(false);
 
   const handleMentorshipRequest = async () => {
     try {
@@ -20,6 +21,7 @@ const MentorCard = ({ mentor }) => {
       //If request is succesful, update the status to "Pending"
       if (response.status === 201) {
         setRequestStatus("Pending");
+        setButtonDisabled(true);
         console.log("Mentorship request sent successfully!");
       }
     } catch (error) {
@@ -34,7 +36,9 @@ const MentorCard = ({ mentor }) => {
       <p>Major: {major}</p>
       <p>School: {school}</p>
       <p>Classification: {classification}</p>
-      <button onClick={handleMentorshipRequest}>{requestStatus}</button>
+      <button onClick={handleMentorshipRequest} disabled={isButtonDisabled}>
+        {requestStatus}
+      </button>
     </div>
   );
 };
