@@ -7,6 +7,10 @@ export const notifications = sequelize.define("notifications", {
     type: DataTypes.ENUM("Accept", "Decline"),
     allowNull: false,
   },
+  content: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   status: {
     type: DataTypes.STRING,
     allowNull: false,

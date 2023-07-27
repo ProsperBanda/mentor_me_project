@@ -1,4 +1,6 @@
 import express from "express";
+import { createServer } from "http";
+import { Server } from "socket.io";
 import session from "express-session";
 import cors from "cors";
 import morgan from "morgan";
@@ -16,6 +18,17 @@ import mentorshipResponseRoutes from "./routes/mentorshipResponseRoute.js";
 import fs from "fs";
 
 const app = express();
+const server = createServer(app);
+const io = new Server(server);
+
+// Socket.io connection setup
+io.on("connection", (socket) => {
+  console.log("New client connected");
+
+  socket.on("disconnect", () => {
+    console.log("Client disconnected");
+  });
+});
 
 app.use(
   cors({
@@ -122,8 +135,8 @@ sequelize
   .sync({ alter: true })
   .then(() => {
     const port = 3000;
-    app.listen(port, () => {
-      console.log(`App is listening on port ${port}`);
+    server.listen(port, () => {
+      console.log(`Socket.io and HTTP server is listening on port ${port}`);
     });
   })
   .catch((error) => {
