@@ -27,7 +27,6 @@ function Login() {
       });
 
       if (response.ok) {
-        console.log("Seccessfully logged in !!");
         const data = await response.json();
         const loggedInUser = data.user;
         localStorage.setItem("id", loggedInUser.id);
@@ -49,9 +48,7 @@ function Login() {
         );
 
         if (response2.ok) {
-          console.log("Got the profile!!");
           const data = await response2.json();
-          console.log("Data:", data);
           if (data.accountType === "Mentee") {
             navigate("/mentee");
           } else {
@@ -60,9 +57,6 @@ function Login() {
         } else {
           navigate("/home");
         }
-
-        // Navigate to the home page after successful login
-        // navigate("/home");
       } else {
         // Handle the login failure case
         alert("Login failed");
