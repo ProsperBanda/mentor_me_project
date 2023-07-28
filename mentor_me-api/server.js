@@ -19,13 +19,27 @@ import fs from "fs";
 
 const app = express();
 const server = createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+});
+
+let onlineUsers = {};
 
 // Socket.io connection setup
 io.on("connection", (socket) => {
+  socket.on("user_connected", (userID) => {
+    onlineUsers[userID] = socket.id;
+  });
   console.log("New client connected");
 
   socket.on("disconnect", () => {
+    delete onlineUsers[
+      Object.keys(onlineUsers).find((key) => onlineUsers[key] === socket.id)
+    ];
     console.log("Client disconnected");
   });
 });
@@ -142,3 +156,5 @@ sequelize
   .catch((error) => {
     console.error("Unable to connect to the database:", error);
   });
+
+export { onlineUsers, io };

@@ -66,7 +66,7 @@ function Signup() {
               onChange={(e) => setUsername(e.target.value)}
               required
             />
-            {errors.name && <span className="text-danger">{errors.name}</span>}
+            {/* {errors.name && <span className="text-danger">{errors.name}</span>} */}
           </div>
           <div className="user-email">
             <label htmlFor="email">
@@ -80,9 +80,9 @@ function Signup() {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-            {errors.email && (
+            {/* {errors.email && (
               <span className="text-danger">{errors.email}</span>
-            )}
+            )} */}
           </div>
           <div className="user-password">
             <label htmlFor="password">
@@ -96,9 +96,9 @@ function Signup() {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            {errors.password && (
+            {/* {errors.password && (
               <span className="text-danger">{errors.password}</span>
-            )}
+            )} */}
           </div>
           <button type="submit" className="btn-success">
             Sign up
