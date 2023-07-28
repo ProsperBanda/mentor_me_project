@@ -7,6 +7,7 @@ import Signup from "./components/Signup";
 import { UserContext } from "../UserContext";
 import MenteeDashboard from "./components/MenteeDashboard";
 import MentorDashboard from "./components/MentorDashboard";
+import { socket } from "./client.js";
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -23,6 +24,28 @@ function App() {
     // Save the user data to storage whenever the user state changes
     localStorage.setItem("user", JSON.stringify(user));
   }, [user]);
+  useEffect(() => {
+    console.log("Before execution");
+    socket.on("new_request", () => {
+      //Check if the user has given permission fro notifications
+      if (localStorage.getItem("notificationPermission") === "granted") {
+        new Notification("You have a new mentorship request!");
+        alert("You have a new mentorship request!");
+      }
+    });
+    socket.on("request_accepted", () => {
+      if (localStorage.getItem("notificationPermission") === "granted") {
+        new Notification("Your mentorship request has been responded to!");
+        alert("Your mentorship request has been accepted!");
+      }
+    });
+
+    //Cleaning up listeners when component unmounts
+    return () => {
+      socket.off("new_request");
+      socket.off("request_accepted");
+    };
+  }, []);
 
   return (
     <div className="app">

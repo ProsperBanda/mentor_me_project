@@ -1,4 +1,6 @@
 import express from "express";
+import { createServer } from "http";
+import { Server } from "socket.io";
 import session from "express-session";
 import cors from "cors";
 import morgan from "morgan";
@@ -16,6 +18,37 @@ import mentorshipResponseRoutes from "./routes/mentorshipResponseRoute.js";
 import fs from "fs";
 
 const app = express();
+const server = createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+});
+
+let onlineUsers = {};
+
+// Socket.io connection setup
+io.on("connection", (socket) => {
+  socket.on("user_connected", (userID) => {
+    console.log("MyUserID: ", userID);
+    socket.userID = userID.userID;
+    onlineUsers[socket.userID] = socket.id;
+    // onlineUsers[userID] = socket.id;
+  });
+
+  console.log("Socket ID: ", socket.id);
+  console.log("OnlineUsers: ", onlineUsers);
+  console.log(`New client connected ${socket.id}`);
+
+  socket.on("disconnect", () => {
+    delete onlineUsers[
+      Object.keys(onlineUsers).find((key) => onlineUsers[key] === socket.id)
+    ];
+    console.log("Client disconnected");
+  });
+});
 
 app.use(
   cors({
@@ -122,10 +155,12 @@ sequelize
   .sync({ alter: true })
   .then(() => {
     const port = 3000;
-    app.listen(port, () => {
-      console.log(`App is listening on port ${port}`);
+    server.listen(port, () => {
+      console.log(`Socket.io and HTTP server is listening on port ${port}`);
     });
   })
   .catch((error) => {
     console.error("Unable to connect to the database:", error);
   });
+
+export { onlineUsers, io };

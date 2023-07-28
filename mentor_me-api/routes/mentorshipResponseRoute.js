@@ -1,6 +1,7 @@
 import express from "express";
 import { mentorshipResponse } from "../models/mentorshipResponse.js";
 import mentorshipRequest from "../models/mentorshipRequest.js";
+import { io, onlineUsers } from "../server.js";
 
 const router = express.Router();
 
@@ -21,6 +22,13 @@ router.post("/:requestID/accept", async (req, res) => {
     request.Status = "Accepted";
     await request.save();
 
+    //If the mentee is online, send them a notification
+    if (request.MenteeID in onlineUsers) {
+      io.to(onlineUsers[request.MenteeID]).emit("request_accepted", {
+        mentorID: request.MentorID,
+        requestID,
+      });
+    }
     //Response record
     const response = await mentorshipResponse.create({
       requestID: requestID,

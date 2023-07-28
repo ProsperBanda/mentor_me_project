@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { socket } from "../client.js";
 
 const MentorCard = ({ mentor }) => {
   const username = mentor.username;
@@ -10,6 +11,18 @@ const MentorCard = ({ mentor }) => {
 
   const handleMentorshipRequest = async () => {
     try {
+      //Check if the browser supports the notifications API
+      if (!"Notification" in window) {
+        alert("This browser does not support notifications.");
+      } else {
+        //Request permission
+        Notification.requestPermission().then(function (permission) {
+          //Save the permission to local storage
+          localStorage.setItem("notificationPermission", permission);
+          console.log(permission);
+        });
+      }
+
       const menteeID = localStorage.getItem("id");
 
       //Make the API call to send a mentorship request
@@ -23,6 +36,9 @@ const MentorCard = ({ mentor }) => {
         setRequestStatus("Pending");
         setButtonDisabled(true);
         console.log("Mentorship request sent successfully!");
+
+        //Notify that a request has been sent
+        socket.emit("new_request", { mentorID: mentor.id, menteeID: menteeID });
       }
     } catch (error) {
       console.error("Failed to send mentorship request:", error);

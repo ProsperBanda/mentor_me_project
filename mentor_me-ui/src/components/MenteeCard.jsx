@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { socket } from "../client.js";
 
 const MenteeCard = ({ mentee }) => {
   const { id, Status, username, school, major, classification, bio } = mentee;
@@ -11,6 +12,7 @@ const MenteeCard = ({ mentee }) => {
 
       //Send a request to the backend to accept mentorship request
       await axios.post(`http://localhost:3000/${id}/accept`);
+      socket.emit("request_accepted", { mentorID: mentorID, menteeID: id });
     } catch (error) {
       console.error("Error accepting mentorship request:", error);
     }
