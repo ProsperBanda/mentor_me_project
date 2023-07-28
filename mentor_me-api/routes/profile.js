@@ -27,14 +27,19 @@ router.post("/profile", async (req, res) => {
 //Read profile information
 router.get("/profile/:id", async (req, res) => {
   try {
-    const profileId = req.params.id;
-    const profile = await userProfile.findByPk(profileId);
+    const userID = req.params.id;
+    console.log("UserID:", userID);
+    const profile = await userProfile.findOne({
+      where: { userId: userID },
+    });
+    console.log("Profile:", profile);
     if (!profile) {
       res.status(404).json({ error: "Profile not found" });
     } else {
       res.status(200).json(profile);
     }
   } catch (error) {
+    console.log("error: ", error);
     res.status(500).json({ error: "Failed to get the profile information" });
   }
 });

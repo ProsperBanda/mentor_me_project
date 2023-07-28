@@ -27,6 +27,7 @@ function Login() {
       });
 
       if (response.ok) {
+        console.log("Seccessfully logged in !!");
         const data = await response.json();
         const loggedInUser = data.user;
         localStorage.setItem("id", loggedInUser.id);
@@ -34,9 +35,34 @@ function Login() {
 
         socket.emit("user_connected", { userID: loggedInUser.id });
         console.log("The ID: ", loggedInUser.id);
+        let uid = loggedInUser.id;
+
+        const response2 = await fetch(
+          `http://localhost:3000/profile/${loggedInUser.id}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+          }
+        );
+
+        if (response2.ok) {
+          console.log("Got the profile!!");
+          const data = await response2.json();
+          console.log("Data:", data);
+          if (data.accountType === "Mentee") {
+            navigate("/mentee");
+          } else {
+            navigate("/mentor");
+          }
+        } else {
+          navigate("/home");
+        }
 
         // Navigate to the home page after successful login
-        navigate("/home");
+        // navigate("/home");
       } else {
         // Handle the login failure case
         alert("Login failed");
