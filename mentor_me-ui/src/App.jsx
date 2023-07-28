@@ -25,10 +25,10 @@ function App() {
     localStorage.setItem("user", JSON.stringify(user));
   }, [user]);
   useEffect(() => {
+    console.log("Before execution");
     socket.on("new_request", () => {
       //Check if the user has given permission fro notifications
       if (localStorage.getItem("notificationPermission") === "granted") {
-        console.log("Before execution");
         new Notification("You have a new mentorship request!");
         alert("You have a new mentorship request!");
       }

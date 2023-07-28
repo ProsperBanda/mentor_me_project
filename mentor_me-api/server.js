@@ -32,9 +32,15 @@ let onlineUsers = {};
 // Socket.io connection setup
 io.on("connection", (socket) => {
   socket.on("user_connected", (userID) => {
-    onlineUsers[userID] = socket.id;
+    console.log("MyUserID: ", userID);
+    socket.userID = userID.userID;
+    onlineUsers[socket.userID] = socket.id;
+    // onlineUsers[userID] = socket.id;
   });
-  console.log("New client connected");
+
+  console.log("Socket ID: ", socket.id);
+  console.log("OnlineUsers: ", onlineUsers);
+  console.log(`New client connected ${socket.id}`);
 
   socket.on("disconnect", () => {
     delete onlineUsers[

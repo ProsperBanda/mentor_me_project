@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../UserContext.js";
+import { socket } from "../client.js";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -30,6 +31,9 @@ function Login() {
         const loggedInUser = data.user;
         localStorage.setItem("id", loggedInUser.id);
         updateUser(loggedInUser);
+
+        socket.emit("user_connected", { userID: loggedInUser.id });
+        console.log("The ID: ", loggedInUser.id);
 
         // Navigate to the home page after successful login
         navigate("/home");
