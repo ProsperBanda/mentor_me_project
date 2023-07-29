@@ -4,7 +4,6 @@ import { newUserObj } from "./users.js";
 
 const router = express.Router();
 
-//Route to create new profile
 router.post("/profile", async (req, res) => {
   try {
     const { school, major, accountType, classification, bio } = req.body;
@@ -24,7 +23,6 @@ router.post("/profile", async (req, res) => {
   }
 });
 
-//Read profile information
 router.get("/profile/:id", async (req, res) => {
   try {
     const userID = req.params.id;
@@ -44,7 +42,6 @@ router.get("/profile/:id", async (req, res) => {
   }
 });
 
-//Update the profile information
 router.put("/profile/:id", async (req, res) => {
   try {
     const profileId = req.params.id;
@@ -63,7 +60,6 @@ router.put("/profile/:id", async (req, res) => {
   }
 });
 
-//Delete Profile
 router.delete("/profile/:id", async (req, res) => {
   try {
     const profileId = req.params.id;

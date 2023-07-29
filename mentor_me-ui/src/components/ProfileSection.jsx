@@ -164,7 +164,6 @@ const ProfileSection = () => {
       if (response.ok) {
         const newProfile = await response.json();
 
-        //Navigate to the destination dashboard based on the accountType
         const destination = accountType === "Mentor" ? "/mentor" : "/mentee";
         navigate(destination);
       } else {

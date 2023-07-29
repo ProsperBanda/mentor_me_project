@@ -16,7 +16,6 @@ function Login() {
     e.preventDefault();
 
     try {
-      // Make the login API request
       const response = await fetch(`http://localhost:3000/users/login`, {
         method: "POST",
         headers: {
@@ -36,7 +35,7 @@ function Login() {
         console.log("The ID: ", loggedInUser.id);
         let uid = loggedInUser.id;
 
-        const response2 = await fetch(
+        const profileCheckResponse = await fetch(
           `http://localhost:3000/profile/${loggedInUser.id}`,
           {
             method: "GET",
@@ -47,8 +46,8 @@ function Login() {
           }
         );
 
-        if (response2.ok) {
-          const data = await response2.json();
+        if (profileCheckResponse.ok) {
+          const data = await profileCheckResponse.json();
           if (data.accountType === "Mentee") {
             navigate("/mentee");
           } else {
@@ -58,11 +57,9 @@ function Login() {
           navigate("/home");
         }
       } else {
-        // Handle the login failure case
         alert("Login failed");
       }
     } catch (error) {
-      // Handle any network or API request errors
       alert("Login failed: " + error);
     }
   };
