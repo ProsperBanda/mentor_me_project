@@ -4,7 +4,6 @@ import { newUserObj } from "./users.js";
 
 const router = express.Router();
 
-//Route to create new profile
 router.post("/profile", async (req, res) => {
   try {
     const { school, major, accountType, classification, bio } = req.body;
@@ -24,22 +23,25 @@ router.post("/profile", async (req, res) => {
   }
 });
 
-//Read profile information
 router.get("/profile/:id", async (req, res) => {
   try {
-    const profileId = req.params.id;
-    const profile = await userProfile.findByPk(profileId);
+    const userID = req.params.id;
+    console.log("UserID:", userID);
+    const profile = await userProfile.findOne({
+      where: { userId: userID },
+    });
+    console.log("Profile:", profile);
     if (!profile) {
       res.status(404).json({ error: "Profile not found" });
     } else {
       res.status(200).json(profile);
     }
   } catch (error) {
+    console.log("error: ", error);
     res.status(500).json({ error: "Failed to get the profile information" });
   }
 });
 
-//Update the profile information
 router.put("/profile/:id", async (req, res) => {
   try {
     const profileId = req.params.id;
@@ -58,7 +60,6 @@ router.put("/profile/:id", async (req, res) => {
   }
 });
 
-//Delete Profile
 router.delete("/profile/:id", async (req, res) => {
   try {
     const profileId = req.params.id;

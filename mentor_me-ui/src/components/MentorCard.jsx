@@ -11,27 +11,11 @@ const MentorCard = ({ mentor }) => {
 
   const handleMentorshipRequest = async () => {
     try {
-      //Check if the browser supports the notifications API
-      if (!"Notification" in window) {
-        alert("This browser does not support notifications.");
-      } else {
-        //Request permission
-        Notification.requestPermission().then(function (permission) {
-          //Save the permission to local storage
-          localStorage.setItem("notificationPermission", permission);
-          console.log(permission);
-        });
-      }
-
       const menteeID = localStorage.getItem("id");
-
-      //Make the API call to send a mentorship request
       const response = await axios.post("http://localhost:3000/request", {
         mentorID: mentor.id,
         menteeID: menteeID,
       });
-
-      //If request is succesful, update the status to "Pending"
       if (response.status === 201) {
         setRequestStatus("Pending");
         setButtonDisabled(true);
