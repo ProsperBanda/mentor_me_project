@@ -32,12 +32,20 @@ let onlineUsers = {};
 // Socket.io connection setup
 io.on("connection", (socket) => {
   socket.on("user_connected", (userID) => {
-    console.log("MyUserID: ", userID);
-    socket.userID = userID.userID;
-    onlineUsers[socket.userID] = socket.id;
-    // onlineUsers[userID] = socket.id;
+    socket.data.userid = userID.userID;
+    // Iterating through all connected sockets
+    for (const [key, value] of io.sockets.sockets.entries()) {
+      console.log("Socket ID:", key);
+      console.log("Socket data:", value.data);
+      const connectedUserId = value.data.userid;
+      if (connectedUserId) {
+        // Storing the connection in the onlineUsers object
+        onlineUsers[connectedUserId] = key;
+      }
+    }
+    // Logging the onlineUsers object
+    console.log("OnlineUsers:", onlineUsers);
   });
-
   console.log("Socket ID: ", socket.id);
   console.log("OnlineUsers: ", onlineUsers);
   console.log(`New client connected ${socket.id}`);
