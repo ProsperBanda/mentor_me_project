@@ -120,6 +120,15 @@ const ProfileSection = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    //Check if the browser supports the notifications API
+    if (!"Notification" in window) {
+      alert("This browser does not support notifications.");
+    } else {
+      Notification.requestPermission().then(function (permission) {
+        localStorage.setItem("notificationPermission", permission);
+      });
+    }
+
     try {
       if (school && !schoolTrie.search(school).includes(school)) {
         addNewWord(school, "school");
