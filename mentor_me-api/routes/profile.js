@@ -26,11 +26,9 @@ router.post("/profile", async (req, res) => {
 router.get("/profile/:id", async (req, res) => {
   try {
     const userID = req.params.id;
-    console.log("UserID:", userID);
     const profile = await userProfile.findOne({
       where: { userId: userID },
     });
-    console.log("Profile:", profile);
     if (!profile) {
       res.status(404).json({ error: "Profile not found" });
     } else {

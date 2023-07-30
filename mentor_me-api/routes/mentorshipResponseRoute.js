@@ -26,7 +26,6 @@ router.post("/:requestID/accept", async (req, res) => {
     //If the mentee is online, send them a notification
     console.log("OnlineUsers on Response: ", onlineUsers);
     if (request.MenteeID in onlineUsers) {
-      console.log("Response working");
       io.to(onlineUsers[request.MenteeID]).emit("request_accepted", {
         mentorID: request.MentorID,
         requestID,
@@ -59,21 +58,17 @@ router.post("/:requestID/decline", async (req, res) => {
 
     //Find the request by ID
     const request = await mentorshipRequest.findByPk(requestID);
-
     if (!request) {
       return res.status(404).json({ error: "Mentorship request not found" });
     }
-
     //If found, then update the status to 'Declined'
     request.Status = "Declined";
     await request.save();
-
     //Response record
     const response = await mentorshipResponse.create({
       requestID: requestID,
       Status: "Declined",
     });
-
     res.json({ message: "Mentorship request declined", response });
   } catch (error) {
     console.error("Error declining mentorship request:", error);

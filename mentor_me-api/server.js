@@ -35,13 +35,9 @@ let onlineUsers = {};
 io.on("connection", (socket) => {
   socket.on("user_connected", (userID) => {
     socket.data.userid = userID.userID;
-    // Iterating through all connected sockets
     for (const [key, value] of io.sockets.sockets.entries()) {
-      console.log("Socket ID:", key);
-      console.log("Socket data:", value.data);
       const connectedUserId = value.data.userid;
       if (connectedUserId) {
-        // Storing the connection in the onlineUsers object
         onlineUsers[connectedUserId] = key;
       }
     }
@@ -86,7 +82,7 @@ app.use(
     credentials: true,
   })
 );
-app.use(express.json()); // Middleware for parsing JSON bodies from HTTP requests
+app.use(express.json());
 app.use(morgan());
 
 const SequelizeStore = SequelizeStoreInit(session.Store);
@@ -108,7 +104,7 @@ app.use(
     cookie: {
       sameSite: false,
       secure: false,
-      expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000), // 1 year in milliseconds
+      expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
     },
   })
 );
@@ -138,7 +134,6 @@ app.get("/userprofile", async (req, res) => {
 app.post("/update-words", (req, res) => {
   const { field, word } = req.body;
 
-  //Making sure that the field and word are provided in the request body
   if (!field || !word) {
     return res.status(400).json({ message: "Field and word are required." });
   }
@@ -153,16 +148,11 @@ app.post("/update-words", (req, res) => {
 
     try {
       const jsonData = JSON.parse(data);
-
-      //Ensure that the field exist in the JSON data
       if (!(field in jsonData)) {
         return res.status(400).json({ message: "Invalid field." });
       }
-      // Check if the word already exists in the field
       if (!jsonData[field].includes(word)) {
         jsonData[field].push(word);
-
-        // Save the updated JSON data to the file
         fs.writeFile(jsonDataPath, JSON.stringify(jsonData, null, 2), (err) => {
           if (err) {
             console.error("Error writing to JSON file:", err);

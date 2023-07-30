@@ -32,7 +32,6 @@ function Login() {
         updateUser(loggedInUser);
 
         socket.emit("user_connected", { userID: loggedInUser.id });
-        console.log("The ID: ", loggedInUser.id);
         let uid = loggedInUser.id;
 
         //Handling the mentor_online and mentee_online events
