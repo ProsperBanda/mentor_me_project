@@ -18,6 +18,7 @@ router.post("/request", async (req, res) => {
     });
 
     //If the mentor is online, send them a notification
+    console.log("OnlineUsers on Request: ", onlineUsers);
     if (mentorID in onlineUsers) {
       io.to(onlineUsers[mentorID]).emit("new_request", {
         menteeID,

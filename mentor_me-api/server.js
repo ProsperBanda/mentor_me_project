@@ -14,7 +14,9 @@ import requestsRoute from "./routes/requests.js";
 import mentorshipResponse from "./models/mentorshipResponse.js";
 import mentorshipRequest from "./models/mentorshipRequest.js";
 import mentorshipRequestRoutes from "./routes/mentorshipRequestRoute.js";
-import mentorshipResponseRoutes from "./routes/mentorshipResponseRoute.js";
+import mentorshipResponseRoutes, {
+  connections,
+} from "./routes/mentorshipResponseRoute.js";
 import fs from "fs";
 
 const app = express();
@@ -32,12 +34,36 @@ let onlineUsers = {};
 // Socket.io connection setup
 io.on("connection", (socket) => {
   socket.on("user_connected", (userID) => {
-    console.log("MyUserID: ", userID);
-    socket.userID = userID.userID;
-    onlineUsers[socket.userID] = socket.id;
-    // onlineUsers[userID] = socket.id;
-  });
+    socket.data.userid = userID.userID;
+    for (const [key, value] of io.sockets.sockets.entries()) {
+      const connectedUserId = value.data.userid;
+      if (connectedUserId) {
+        onlineUsers[connectedUserId] = key;
+      }
+    }
 
+    connections.forEach((connection) => {
+      if (
+        connection.menteeID === userID.userID &&
+        connection.mentorID in onlineUsers
+      ) {
+        io.to(onlineUsers[connection.mentorID]).emit("mentee_online", {
+          menteeID: userID.userID,
+        });
+      } else if (
+        connection.mentorID === userID.userID &&
+        connection.menteeID in onlineUsers
+      ) {
+        io.to(onlineUsers[connection.menteeID]).emit("mentor_online", {
+          mentorID: userID.userID,
+        });
+      }
+    });
+
+    // Logging the onlineUsers object
+    console.log("OnlineUsers:", onlineUsers);
+    console.log("Connections: ", connections);
+  });
   console.log("Socket ID: ", socket.id);
   console.log("OnlineUsers: ", onlineUsers);
   console.log(`New client connected ${socket.id}`);
@@ -56,7 +82,7 @@ app.use(
     credentials: true,
   })
 );
-app.use(express.json()); // Middleware for parsing JSON bodies from HTTP requests
+app.use(express.json());
 app.use(morgan());
 
 const SequelizeStore = SequelizeStoreInit(session.Store);
@@ -78,7 +104,7 @@ app.use(
     cookie: {
       sameSite: false,
       secure: false,
-      expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000), // 1 year in milliseconds
+      expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
     },
   })
 );
@@ -108,7 +134,6 @@ app.get("/userprofile", async (req, res) => {
 app.post("/update-words", (req, res) => {
   const { field, word } = req.body;
 
-  //Making sure that the field and word are provided in the request body
   if (!field || !word) {
     return res.status(400).json({ message: "Field and word are required." });
   }
@@ -123,16 +148,11 @@ app.post("/update-words", (req, res) => {
 
     try {
       const jsonData = JSON.parse(data);
-
-      //Ensure that the field exist in the JSON data
       if (!(field in jsonData)) {
         return res.status(400).json({ message: "Invalid field." });
       }
-      // Check if the word already exists in the field
       if (!jsonData[field].includes(word)) {
         jsonData[field].push(word);
-
-        // Save the updated JSON data to the file
         fs.writeFile(jsonDataPath, JSON.stringify(jsonData, null, 2), (err) => {
           if (err) {
             console.error("Error writing to JSON file:", err);

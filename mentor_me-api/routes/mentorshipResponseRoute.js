@@ -4,6 +4,7 @@ import mentorshipRequest from "../models/mentorshipRequest.js";
 import { io, onlineUsers } from "../server.js";
 
 const router = express.Router();
+let connections = [];
 
 //Route to handle accepting a mentorship request
 router.post("/:requestID/accept", async (req, res) => {
@@ -23,12 +24,20 @@ router.post("/:requestID/accept", async (req, res) => {
     await request.save();
 
     //If the mentee is online, send them a notification
+    console.log("OnlineUsers on Response: ", onlineUsers);
     if (request.MenteeID in onlineUsers) {
       io.to(onlineUsers[request.MenteeID]).emit("request_accepted", {
         mentorID: request.MentorID,
         requestID,
       });
     }
+
+    //Store connected mentor<>mentee
+    connections.push({
+      mentorID: request.MentorID,
+      menteeID: request.MenteeID,
+    });
+    console.log(connections);
     //Response record
     const response = await mentorshipResponse.create({
       requestID: requestID,
@@ -49,21 +58,17 @@ router.post("/:requestID/decline", async (req, res) => {
 
     //Find the request by ID
     const request = await mentorshipRequest.findByPk(requestID);
-
     if (!request) {
       return res.status(404).json({ error: "Mentorship request not found" });
     }
-
     //If found, then update the status to 'Declined'
     request.Status = "Declined";
     await request.save();
-
     //Response record
     const response = await mentorshipResponse.create({
       requestID: requestID,
       Status: "Declined",
     });
-
     res.json({ message: "Mentorship request declined", response });
   } catch (error) {
     console.error("Error declining mentorship request:", error);
@@ -72,3 +77,4 @@ router.post("/:requestID/decline", async (req, res) => {
 });
 
 export default router;
+export { connections };

@@ -27,17 +27,14 @@ function App() {
   useEffect(() => {
     console.log("Before execution");
     socket.on("new_request", () => {
-      //Check if the user has given permission fro notifications
-      if (localStorage.getItem("notificationPermission") === "granted") {
-        new Notification("You have a new mentorship request!");
-        alert("You have a new mentorship request!");
-      }
+      console.log("The request was received!");
+      new Notification("You have a new mentorship request!");
+      alert("You have a new mentorship request!");
     });
     socket.on("request_accepted", () => {
-      if (localStorage.getItem("notificationPermission") === "granted") {
-        new Notification("Your mentorship request has been responded to!");
-        alert("Your mentorship request has been accepted!");
-      }
+      console.log("The request has been accepted");
+      new Notification("Your mentorship request has been responded to!");
+      alert("Your mentorship request has been accepted!");
     });
 
     //Cleaning up listeners when component unmounts

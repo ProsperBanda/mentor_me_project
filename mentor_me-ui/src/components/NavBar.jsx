@@ -3,7 +3,6 @@ import "./NavBar.css";
 
 let storedUser = localStorage.getItem("user");
 storedUser = JSON.parse(storedUser);
-
 const NavBar = () => {
   return (
     <nav>

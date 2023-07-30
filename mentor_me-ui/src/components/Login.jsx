@@ -32,8 +32,15 @@ function Login() {
         updateUser(loggedInUser);
 
         socket.emit("user_connected", { userID: loggedInUser.id });
-        console.log("The ID: ", loggedInUser.id);
         let uid = loggedInUser.id;
+
+        //Handling the mentor_online and mentee_online events
+        socket.on("mentor_online", (data) => {
+          alert(`Your connected mentor ${data.mentorID} is now online!`);
+        });
+        socket.on("mentee_online", (data) => {
+          alert(`Your connected mentee ${data.menteeID} is now online!`);
+        });
 
         const profileCheckResponse = await fetch(
           `http://localhost:3000/profile/${loggedInUser.id}`,
