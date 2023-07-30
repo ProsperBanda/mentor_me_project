@@ -23,7 +23,9 @@ router.post("/:requestID/accept", async (req, res) => {
     await request.save();
 
     //If the mentee is online, send them a notification
+    console.log("OnlineUsers on Response: ", onlineUsers);
     if (request.MenteeID in onlineUsers) {
+      console.log("Response working");
       io.to(onlineUsers[request.MenteeID]).emit("request_accepted", {
         mentorID: request.MentorID,
         requestID,

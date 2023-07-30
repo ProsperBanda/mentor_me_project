@@ -4,7 +4,6 @@ import { socket } from "../client.js";
 
 const MenteeCard = ({ mentee }) => {
   const { id, Status, username, school, major, classification, bio } = mentee;
-  console.log(mentee);
 
   const handleAcceptRequest = async () => {
     try {
