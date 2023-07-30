@@ -4,6 +4,7 @@ import mentorshipRequest from "../models/mentorshipRequest.js";
 import { io, onlineUsers } from "../server.js";
 
 const router = express.Router();
+let connections = [];
 
 //Route to handle accepting a mentorship request
 router.post("/:requestID/accept", async (req, res) => {
@@ -31,6 +32,13 @@ router.post("/:requestID/accept", async (req, res) => {
         requestID,
       });
     }
+
+    //Store connected mentor<>mentee
+    connections.push({
+      mentorID: request.MentorID,
+      menteeID: request.MenteeID,
+    });
+    console.log(connections);
     //Response record
     const response = await mentorshipResponse.create({
       requestID: requestID,
@@ -74,3 +82,4 @@ router.post("/:requestID/decline", async (req, res) => {
 });
 
 export default router;
+export { connections };

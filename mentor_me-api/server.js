@@ -14,7 +14,9 @@ import requestsRoute from "./routes/requests.js";
 import mentorshipResponse from "./models/mentorshipResponse.js";
 import mentorshipRequest from "./models/mentorshipRequest.js";
 import mentorshipRequestRoutes from "./routes/mentorshipRequestRoute.js";
-import mentorshipResponseRoutes from "./routes/mentorshipResponseRoute.js";
+import mentorshipResponseRoutes, {
+  connections,
+} from "./routes/mentorshipResponseRoute.js";
 import fs from "fs";
 
 const app = express();
@@ -43,8 +45,28 @@ io.on("connection", (socket) => {
         onlineUsers[connectedUserId] = key;
       }
     }
+
+    connections.forEach((connection) => {
+      if (
+        connection.menteeID === userID.userID &&
+        connection.mentorID in onlineUsers
+      ) {
+        io.to(onlineUsers[connection.mentorID]).emit("mentee_online", {
+          menteeID: userID.userID,
+        });
+      } else if (
+        connection.mentorID === userID.userID &&
+        connection.menteeID in onlineUsers
+      ) {
+        io.to(onlineUsers[connection.menteeID]).emit("mentor_online", {
+          mentorID: userID.userID,
+        });
+      }
+    });
+
     // Logging the onlineUsers object
     console.log("OnlineUsers:", onlineUsers);
+    console.log("Connections: ", connections);
   });
   console.log("Socket ID: ", socket.id);
   console.log("OnlineUsers: ", onlineUsers);
