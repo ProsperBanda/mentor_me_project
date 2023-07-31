@@ -4,8 +4,8 @@ const Notifications = () => {
   return (
     <div className="notifications-content">
       <h3>Notifications</h3>
-      <p>Notification 1: Request was accepted!</p>
-      <p>Notification 2: Message from Mentor</p>
+      <p>Notification 1: New mentorship request!</p>
+      <p>Notification 2: Message from Mentee</p>
     </div>
   );
 };

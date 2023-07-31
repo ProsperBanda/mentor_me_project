@@ -23,3 +23,23 @@
   display: flex;
   border-top: 40px;
 }
+
+.notifications-popup {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 300px;
+  height: 100%;
+  background: white;
+  overflow: auto;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.back-arrow {
+  font-size: 24px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 10px;
+}
