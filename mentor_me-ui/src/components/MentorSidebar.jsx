@@ -4,6 +4,7 @@ import Notifications from "./MentorNotifications";
 
 const MentorSideBar = () => {
   const [showNotifications, setShowNotifications] = useState(false);
+  const [notifications, setNotifications] = useState([]);
 
   const handleNotificationsClick = () => {
     setShowNotifications(!showNotifications);
@@ -21,7 +22,10 @@ const MentorSideBar = () => {
           <button className="back-arrow" onClick={handleNotificationsClick}>
             ⬅
           </button>
-          <Notifications />
+          <Notifications
+            notifications={notifications}
+            setNotifications={setNotifications}
+          />
         </div>
       )}
     </div>

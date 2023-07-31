@@ -11,26 +11,6 @@ function Login() {
 
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-
-  const sendNotification = async (content, receivingUserID, sendingUserID) => {
-    try {
-      await fetch(`http://localhost:3000/notifications`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          content,
-          status: "Unread",
-          receivingUserID,
-          sendingUserID,
-        }),
-      });
-    } catch (error) {
-      console.error("Failed to send notification:", error);
-    }
-  };
-
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -56,18 +36,8 @@ function Login() {
         //Handling the mentor_online and mentee_online events
         socket.on("mentor_online", (data) => {
           alert(`Your connected mentor ${data.mentorID} is now online!`);
-          sendNotification(
-            "Your connected mentor is online!",
-            loggedInUser.id,
-            data.mentorID
-          );
         });
         socket.on("mentee_online", (data) => {
-          sendNotification(
-            "Your connected mentee is online!",
-            loggedInUser.id,
-            data.menteeID
-          );
           alert(`Your connected mentee ${data.menteeID} is now online!`);
         });
 

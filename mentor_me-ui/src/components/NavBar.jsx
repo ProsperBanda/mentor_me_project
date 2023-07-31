@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./NavBar.css";
 
-let storedUser = localStorage.getItem("user");
-storedUser = JSON.parse(storedUser);
 const NavBar = () => {
+  let storedUser = localStorage.getItem("user");
+  storedUser = JSON.parse(storedUser);
   return (
     <nav>
       <div className="nav-content">

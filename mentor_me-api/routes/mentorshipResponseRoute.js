@@ -2,6 +2,7 @@ import express from "express";
 import { mentorshipResponse } from "../models/mentorshipResponse.js";
 import mentorshipRequest from "../models/mentorshipRequest.js";
 import { io, onlineUsers } from "../server.js";
+import { notifications } from "../models/notifications.js";
 
 const router = express.Router();
 let connections = [];
@@ -23,12 +24,21 @@ router.post("/:requestID/accept", async (req, res) => {
     request.Status = "Accepted";
     await request.save();
 
+    //Create a notification in the database
+    const notificationContent = "Your request was accepted!";
+    const notification = await notifications.create({
+      content: notificationContent,
+      receivingUserID: request.MenteeID,
+      sendingUserID: request.MentorID,
+    });
+
     //If the mentee is online, send them a notification
     console.log("OnlineUsers on Response: ", onlineUsers);
     if (request.MenteeID in onlineUsers) {
       io.to(onlineUsers[request.MenteeID]).emit("request_accepted", {
         mentorID: request.MentorID,
         requestID,
+        notification,
       });
     }
 

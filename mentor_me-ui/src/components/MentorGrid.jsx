@@ -9,7 +9,14 @@ const MentorGrid = ({ selectedMajor, selectedClassification, searchQuery }) => {
   useEffect(() => {
     const fetchMentors = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/mentors");
+        const menteeID = localStorage.getItem("id");
+        const response = await axios.get("http://localhost:3000/mentors", {
+          params: {
+            menteeID,
+            major: selectedMajor,
+            classification: selectedClassification,
+          },
+        });
         const data = response.data;
 
         let filteredMentors = data.filter((mentor) => {

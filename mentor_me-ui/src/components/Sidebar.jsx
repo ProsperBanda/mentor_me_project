@@ -4,6 +4,7 @@ import Notifications from "./MenteeNotifications";
 
 const SideBar = () => {
   const [showNotifications, setShowNotifications] = useState(false);
+  const [notifications, setNotifications] = useState([]);
 
   const handleNotificationsClick = () => {
     setShowNotifications(!showNotifications);
@@ -21,7 +22,10 @@ const SideBar = () => {
           <button className="back-arrow" onClick={handleNotificationsClick}>
             ⬅
           </button>
-          <Notifications />
+          <Notifications
+            notifications={notifications}
+            setNotifications={setNotifications}
+          />
         </div>
       )}
     </div>
