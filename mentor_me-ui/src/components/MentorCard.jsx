@@ -21,10 +21,8 @@ const MentorCard = ({ mentor }) => {
   );
   const menteeID = localStorage.getItem("id");
   const mentee = JSON.parse(localStorage.getItem("user"));
-  // const menteeName = mentee.username;
 
   useEffect(() => {
-    // Get all user profiles and find the mentor's email
     axios
       .get("http://localhost:3000/userprofile")
       .then((response) => {
@@ -43,7 +41,6 @@ const MentorCard = ({ mentor }) => {
 
   const handleMentorshipRequest = async () => {
     try {
-      // const menteeID = localStorage.getItem("id");
       const menteeName = mentee.username;
       const response = await axios.post("http://localhost:3000/request", {
         mentorID: mentor.id,
@@ -57,13 +54,11 @@ const MentorCard = ({ mentor }) => {
         console.log("MentorEmail: ", mentorEmail);
         console.log("MentorName: ", mentorName);
         if (notificationPermissionStatus === "granted") {
-          //Notify that a request has been sent
           socket.emit("new_request", {
             mentorID: mentor.id,
             menteeID: menteeID,
           });
         } else {
-          // Email Notification
           const templateParams = {
             to_email: mentorEmail,
             to_name: mentorName,

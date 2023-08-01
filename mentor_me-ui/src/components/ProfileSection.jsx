@@ -69,7 +69,6 @@ const ProfileSection = () => {
     }
   };
 
-  // With the data from the JSON file, populate the corresponding Trie
   useEffect(() => {
     populateTries();
   });
@@ -120,7 +119,6 @@ const ProfileSection = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    //Check if the browser supports the notifications API
     if (!"Notification" in window) {
       alert("This browser does not support notifications.");
     } else {

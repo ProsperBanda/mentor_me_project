@@ -13,7 +13,6 @@ const MenteeCard = ({ mentee }) => {
   const mentor = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    // Get all user profiles and find the mentee's email
     axios
       .get("http://localhost:3000/userprofile")
       .then((response) => {
@@ -38,7 +37,6 @@ const MenteeCard = ({ mentee }) => {
       if (notificationPermissionStatus === "granted") {
         socket.emit("request_accepted", { mentorID: mentorID, menteeID: id });
       } else {
-        // Email Notification
         const templateParams = {
           to_email: menteeEmail,
           to_name: menteeName,
