@@ -95,7 +95,6 @@ app.get("/", (req, res) => {
   res.send("I am here!!!");
 });
 
-// Session middleware
 app.use(
   session({
     secret: "your-secret-key",
@@ -118,7 +117,6 @@ app.use(mentorshipRequestRoutes);
 app.use(mentorshipResponseRoutes);
 app.use(requestsRoute);
 
-//Route to get all users with associated profiles
 app.get("/userprofile", async (req, res) => {
   try {
     const profiles = await userProfile.findAll({
@@ -131,14 +129,12 @@ app.get("/userprofile", async (req, res) => {
   }
 });
 
-//Route to update the JSON file with new words
 app.post("/update-words", (req, res) => {
   const { field, word } = req.body;
 
   if (!field || !word) {
     return res.status(400).json({ message: "Field and word are required." });
   }
-  //Load the JSON file
   const jsonDataPath =
     "/Users/prosperbanda/Desktop/mentor_me_project/mentor_me-ui/src/FormData.json";
   fs.readFile(jsonDataPath, "utf8", (err, data) => {

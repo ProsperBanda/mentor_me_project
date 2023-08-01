@@ -1,7 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database.js";
 
-//Define the userProfile model
 export const userProfile = sequelize.define("userProfile", {
   school: {
     type: DataTypes.STRING,

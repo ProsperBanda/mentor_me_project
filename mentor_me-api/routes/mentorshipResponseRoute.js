@@ -13,18 +13,15 @@ router.post("/:requestID/accept", async (req, res) => {
     const { requestID } = req.params;
     console.log("RequestID:", requestID);
 
-    //Find the mentorship request by ID
     const request = await mentorshipRequest.findByPk(requestID);
 
     if (!request) {
       return res.status(404).json({ error: "Mentorship request not found" });
     }
 
-    //If found, then update the request to 'Accepted'
     request.Status = "Accepted";
     await request.save();
 
-    //Create a notification in the database
     const notificationContent = "Your request was accepted!";
     const notification = await notifications.create({
       content: notificationContent,
@@ -48,7 +45,6 @@ router.post("/:requestID/accept", async (req, res) => {
       menteeID: request.MenteeID,
     });
     console.log(connections);
-    //Response record
     const response = await mentorshipResponse.create({
       requestID: requestID,
       Status: "Accepted",
@@ -66,15 +62,12 @@ router.post("/:requestID/decline", async (req, res) => {
   try {
     const { requestID } = req.params;
 
-    //Find the request by ID
     const request = await mentorshipRequest.findByPk(requestID);
     if (!request) {
       return res.status(404).json({ error: "Mentorship request not found" });
     }
-    //If found, then update the status to 'Declined'
     request.Status = "Declined";
     await request.save();
-    //Response record
     const response = await mentorshipResponse.create({
       requestID: requestID,
       Status: "Declined",

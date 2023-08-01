@@ -14,7 +14,6 @@ function Signup() {
     event.preventDefault();
 
     try {
-      // Make the signup API request
       const response = await fetch(`http://localhost:3000/users`, {
         method: "POST",
         headers: {
@@ -28,22 +27,18 @@ function Signup() {
         const data = await response.json();
         const loggedInUser = data.user;
         localStorage.setItem("id", loggedInUser.id);
-        // Reset form fields
         setUsername("");
         setEmail("");
         setPassword("");
 
-        // Update the user context
         updateUser(loggedInUser);
 
         // Navigate to the login page after successful signup
         navigate("/");
       } else {
-        // Handle signup failure case
         alert("Signup failed");
       }
     } catch (error) {
-      // Handle any network or API request errors
       alert("Signup failed: " + error);
     }
   };
@@ -66,7 +61,6 @@ function Signup() {
               onChange={(e) => setUsername(e.target.value)}
               required
             />
-            {/* {errors.name && <span className="text-danger">{errors.name}</span>} */}
           </div>
           <div className="user-email">
             <label htmlFor="email">
@@ -80,9 +74,6 @@ function Signup() {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-            {/* {errors.email && (
-              <span className="text-danger">{errors.email}</span>
-            )} */}
           </div>
           <div className="user-password">
             <label htmlFor="password">
@@ -96,9 +87,6 @@ function Signup() {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            {/* {errors.password && (
-              <span className="text-danger">{errors.password}</span>
-            )} */}
           </div>
           <button type="submit" className="btn-success">
             Sign up

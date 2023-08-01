@@ -7,7 +7,6 @@ const MenteeGrid = () => {
   const [mentorshipRequests, setMentorshipRequests] = useState([]);
 
   useEffect(() => {
-    //Fetch incoming mentorship request from the backend
     const fetchMentorshipRequests = async () => {
       try {
         const response = await axios.get(
@@ -23,7 +22,6 @@ const MenteeGrid = () => {
   return (
     <div className="mentee-grid">
       {mentorshipRequests.map((request) => {
-        //Extract data
         const { Status, id, User } = request;
         const { username, email, userprofile } = User;
         const { school, major, classification, bio } = userprofile;

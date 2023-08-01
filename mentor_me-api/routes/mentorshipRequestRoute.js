@@ -5,20 +5,16 @@ import { notifications } from "../models/notifications.js";
 
 const router = express.Router();
 
-//Route to handle sending a mentorship request
 router.post("/request", async (req, res) => {
   try {
-    //Get mentorID and menteeID from the body
     const { mentorID, menteeID } = req.body;
 
-    //Create a mentorship request in the database
     const request = await mentorshipRequest.create({
       MenteeID: menteeID,
       MentorID: mentorID,
       Status: "Pending",
     });
 
-    //Create a notification in the database
     const notificationContent = "You have a new mentorship request!";
     const notification = await notifications.create({
       content: notificationContent,

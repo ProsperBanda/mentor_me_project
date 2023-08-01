@@ -24,10 +24,8 @@ const Notifications = ({ notifications, setNotifications }) => {
       ]);
     };
 
-    // Listening to an event from the server
     socket.on("request_accepted", handleAccept);
 
-    // Clean up the listener when the component is unmounted
     return () => {
       socket.off("new_request", handleAccept);
     };
