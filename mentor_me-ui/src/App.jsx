@@ -25,11 +25,11 @@ function App() {
     localStorage.setItem("user", JSON.stringify(user));
   }, [user]);
   useEffect(() => {
-    // socket.on("new_request", () => {
-    //   console.log("The request was received!");
-    //   new Notification("You have a new mentorship request!");
-    //   alert("You have a new mentorship request!");
-    // });
+    socket.on("new_request", () => {
+      console.log("The request was received!");
+      new Notification("You have a new mentorship request!");
+      alert("You have a new mentorship request!");
+    });
     socket.on("request_accepted", () => {
       console.log("The request has been accepted");
       new Notification("Your mentorship request has been responded to!");

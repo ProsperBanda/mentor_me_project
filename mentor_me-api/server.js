@@ -18,6 +18,7 @@ import mentorshipResponseRoutes, {
   connections,
 } from "./routes/mentorshipResponseRoute.js";
 import fs from "fs";
+import { notifications } from "./models/notifications.js";
 
 const app = express();
 const server = createServer(app);
@@ -116,7 +117,6 @@ app.use(mentorsRoute);
 app.use(mentorshipRequestRoutes);
 app.use(mentorshipResponseRoutes);
 app.use(requestsRoute);
-// app.use(notificationsRoute);
 
 //Route to get all users with associated profiles
 app.get("/userprofile", async (req, res) => {
@@ -170,6 +170,29 @@ app.post("/update-words", (req, res) => {
       return res.status(500).json({ message: "Internal server error." });
     }
   });
+});
+
+app.get("/notifications/:userID", async (req, res) => {
+  try {
+    const userID = req.params.userID;
+    const userNotifications = await notifications.findAll({
+      where: {
+        receivingUserID: userID,
+      },
+      include: [
+        {
+          model: User,
+          as: "sender",
+          attributes: ["username"],
+        },
+      ],
+      order: [["createdAt", "DESC"]],
+    });
+    res.status(200).json(userNotifications);
+  } catch (error) {
+    console.error("Error fetching notifications:", error);
+    res.status(500).json({ error: "Failed to fetch notifications" });
+  }
 });
 
 sequelize
