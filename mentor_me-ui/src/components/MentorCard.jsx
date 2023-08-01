@@ -49,10 +49,6 @@ const MentorCard = ({ mentor }) => {
       if (response.status === 201) {
         setRequestStatus("Pending");
         setButtonDisabled(true);
-        console.log("Mentorship request sent successfully!");
-        console.log("MenteeName: ", menteeName);
-        console.log("MentorEmail: ", mentorEmail);
-        console.log("MentorName: ", mentorName);
         if (notificationPermissionStatus === "granted") {
           socket.emit("new_request", {
             mentorID: mentor.id,
