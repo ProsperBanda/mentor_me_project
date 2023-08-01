@@ -6,8 +6,12 @@ const MentorCard = ({ mentor }) => {
   const username = mentor.username;
   const { school, major, classification, bio } = mentor.userprofile;
 
-  const [requestStatus, setRequestStatus] = useState("Request");
-  const [isButtonDisabled, setButtonDisabled] = useState(false);
+  const [requestStatus, setRequestStatus] = useState(
+    mentor.requestStatus || "Request"
+  );
+  const [isButtonDisabled, setButtonDisabled] = useState(
+    mentor.requestStatus !== "Send Request"
+  );
 
   const handleMentorshipRequest = async () => {
     try {

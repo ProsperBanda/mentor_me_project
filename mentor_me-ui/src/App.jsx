@@ -25,7 +25,6 @@ function App() {
     localStorage.setItem("user", JSON.stringify(user));
   }, [user]);
   useEffect(() => {
-    console.log("Before execution");
     socket.on("new_request", () => {
       console.log("The request was received!");
       new Notification("You have a new mentorship request!");
@@ -39,7 +38,7 @@ function App() {
 
     //Cleaning up listeners when component unmounts
     return () => {
-      socket.off("new_request");
+      // socket.off("new_request");
       socket.off("request_accepted");
     };
   }, []);

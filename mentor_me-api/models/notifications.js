@@ -3,10 +3,6 @@ import { sequelize } from "../database.js";
 import { User } from "./user.js";
 
 export const notifications = sequelize.define("notifications", {
-  type: {
-    type: DataTypes.ENUM("Accept", "Decline"),
-    allowNull: false,
-  },
   content: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -21,13 +17,16 @@ export const notifications = sequelize.define("notifications", {
 //Associations
 User.hasMany(notifications, {
   as: "receivedNotifications",
-  foreignKey: receivingUserID,
+  foreignKey: "receivingUserID",
 });
 User.hasMany(notifications, {
   as: "sentNotifications",
-  foreignKey: sendingUserID,
+  foreignKey: "sendingUserID",
 });
-notifications.belongsTo(User, { as: "receiver", foreignKey: receivingUserID });
-notifications.belongsTo(User, { as: "sender", foreignKey: sendingUserID });
+notifications.belongsTo(User, {
+  as: "receiver",
+  foreignKey: "receivingUserID",
+});
+notifications.belongsTo(User, { as: "sender", foreignKey: "sendingUserID" });
 
 export default notifications;

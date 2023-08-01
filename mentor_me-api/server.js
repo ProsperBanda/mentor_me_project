@@ -18,6 +18,7 @@ import mentorshipResponseRoutes, {
   connections,
 } from "./routes/mentorshipResponseRoute.js";
 import fs from "fs";
+import { notifications } from "./models/notifications.js";
 
 const app = express();
 const server = createServer(app);
@@ -94,7 +95,6 @@ app.get("/", (req, res) => {
   res.send("I am here!!!");
 });
 
-// Session middleware
 app.use(
   session({
     secret: "your-secret-key",
@@ -117,7 +117,6 @@ app.use(mentorshipRequestRoutes);
 app.use(mentorshipResponseRoutes);
 app.use(requestsRoute);
 
-//Route to get all users with associated profiles
 app.get("/userprofile", async (req, res) => {
   try {
     const profiles = await userProfile.findAll({
@@ -130,14 +129,12 @@ app.get("/userprofile", async (req, res) => {
   }
 });
 
-//Route to update the JSON file with new words
 app.post("/update-words", (req, res) => {
   const { field, word } = req.body;
 
   if (!field || !word) {
     return res.status(400).json({ message: "Field and word are required." });
   }
-  //Load the JSON file
   const jsonDataPath =
     "/Users/prosperbanda/Desktop/mentor_me_project/mentor_me-ui/src/FormData.json";
   fs.readFile(jsonDataPath, "utf8", (err, data) => {
@@ -169,6 +166,29 @@ app.post("/update-words", (req, res) => {
       return res.status(500).json({ message: "Internal server error." });
     }
   });
+});
+
+app.get("/notifications/:userID", async (req, res) => {
+  try {
+    const userID = req.params.userID;
+    const userNotifications = await notifications.findAll({
+      where: {
+        receivingUserID: userID,
+      },
+      include: [
+        {
+          model: User,
+          as: "sender",
+          attributes: ["username"],
+        },
+      ],
+      order: [["createdAt", "DESC"]],
+    });
+    res.status(200).json(userNotifications);
+  } catch (error) {
+    console.error("Error fetching notifications:", error);
+    res.status(500).json({ error: "Failed to fetch notifications" });
+  }
 });
 
 sequelize

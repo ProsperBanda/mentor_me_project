@@ -17,7 +17,6 @@ export const mentorshipRequest = sequelize.define("mentorshipRequest", {
   },
 });
 
-//Associations
 User.hasMany(mentorshipRequest);
 mentorshipRequest.belongsTo(User, { foreignKey: "MenteeID" });
 

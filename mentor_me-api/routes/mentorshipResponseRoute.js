@@ -2,6 +2,7 @@ import express from "express";
 import { mentorshipResponse } from "../models/mentorshipResponse.js";
 import mentorshipRequest from "../models/mentorshipRequest.js";
 import { io, onlineUsers } from "../server.js";
+import { notifications } from "../models/notifications.js";
 
 const router = express.Router();
 let connections = [];
@@ -12,16 +13,21 @@ router.post("/:requestID/accept", async (req, res) => {
     const { requestID } = req.params;
     console.log("RequestID:", requestID);
 
-    //Find the mentorship request by ID
     const request = await mentorshipRequest.findByPk(requestID);
 
     if (!request) {
       return res.status(404).json({ error: "Mentorship request not found" });
     }
 
-    //If found, then update the request to 'Accepted'
     request.Status = "Accepted";
     await request.save();
+
+    const notificationContent = "Your request was accepted!";
+    const notification = await notifications.create({
+      content: notificationContent,
+      receivingUserID: request.MenteeID,
+      sendingUserID: request.MentorID,
+    });
 
     //If the mentee is online, send them a notification
     console.log("OnlineUsers on Response: ", onlineUsers);
@@ -29,6 +35,7 @@ router.post("/:requestID/accept", async (req, res) => {
       io.to(onlineUsers[request.MenteeID]).emit("request_accepted", {
         mentorID: request.MentorID,
         requestID,
+        notification,
       });
     }
 
@@ -38,7 +45,6 @@ router.post("/:requestID/accept", async (req, res) => {
       menteeID: request.MenteeID,
     });
     console.log(connections);
-    //Response record
     const response = await mentorshipResponse.create({
       requestID: requestID,
       Status: "Accepted",
@@ -56,15 +62,12 @@ router.post("/:requestID/decline", async (req, res) => {
   try {
     const { requestID } = req.params;
 
-    //Find the request by ID
     const request = await mentorshipRequest.findByPk(requestID);
     if (!request) {
       return res.status(404).json({ error: "Mentorship request not found" });
     }
-    //If found, then update the status to 'Declined'
     request.Status = "Declined";
     await request.save();
-    //Response record
     const response = await mentorshipResponse.create({
       requestID: requestID,
       Status: "Declined",

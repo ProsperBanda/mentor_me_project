@@ -11,7 +11,6 @@ function Login() {
 
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -34,7 +33,6 @@ function Login() {
         socket.emit("user_connected", { userID: loggedInUser.id });
         let uid = loggedInUser.id;
 
-        //Handling the mentor_online and mentee_online events
         socket.on("mentor_online", (data) => {
           alert(`Your connected mentor ${data.mentorID} is now online!`);
         });

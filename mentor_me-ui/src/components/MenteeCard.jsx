@@ -9,7 +9,6 @@ const MenteeCard = ({ mentee }) => {
     try {
       const mentorID = localStorage.getItem("id");
 
-      //Send a request to the backend to accept mentorship request
       await axios.post(`http://localhost:3000/${id}/accept`);
       socket.emit("request_accepted", { mentorID: mentorID, menteeID: id });
     } catch (error) {
@@ -18,7 +17,6 @@ const MenteeCard = ({ mentee }) => {
   };
   const handleDeclineRequest = async () => {
     try {
-      //Send request to the backend to decline mentorship request
       await axios.post(`http://localhost:3000/${id}/decline`);
     } catch (error) {
       console.error("Error declining mentorship request:", error);
