@@ -5,12 +5,13 @@ import axios from "axios";
 
 const MenteeGrid = () => {
   const [mentorshipRequests, setMentorshipRequests] = useState([]);
+  const mentorID = localStorage.getItem("id");
 
   useEffect(() => {
     const fetchMentorshipRequests = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/mentorship-requests"
+          `http://localhost:3000/mentorship-requests?mentorID=${mentorID}`
         );
         setMentorshipRequests(response.data);
       } catch (error) {

@@ -11,6 +11,7 @@ const MenteeCard = ({ mentee }) => {
   );
   const [menteeName, setMenteeName] = useState(null);
   const mentor = JSON.parse(localStorage.getItem("user"));
+  const [status, setStatus] = useState(mentee.Status);
 
   useEffect(() => {
     axios
@@ -50,6 +51,7 @@ const MenteeCard = ({ mentee }) => {
           "2Q2IGBHUMYxrj09BR"
         );
       }
+      setStatus("Accepted");
     } catch (error) {
       console.error("Error accepting mentorship request:", error);
     }
@@ -57,6 +59,7 @@ const MenteeCard = ({ mentee }) => {
   const handleDeclineRequest = async () => {
     try {
       await axios.post(`http://localhost:3000/${id}/decline`);
+      setStatus("Declined");
     } catch (error) {
       console.error("Error declining mentorship request:", error);
     }
@@ -68,9 +71,9 @@ const MenteeCard = ({ mentee }) => {
       <p>bio: {bio}</p>
       <p>Major: {major}</p>
       <p>School: {school}</p>
-      <p>Status: {Status}</p>
+      <p>Status: {status}</p>
       <p>Classification: {classification}</p>
-      {Status === "Pending" && (
+      {status === "Pending" && (
         <>
           <button onClick={handleAcceptRequest}>Accept</button>
           <button onClick={handleDeclineRequest}>Decline</button>
