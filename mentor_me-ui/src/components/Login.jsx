@@ -3,6 +3,7 @@ import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../UserContext.js";
 import { socket } from "../client.js";
+import axios from "axios";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -26,7 +27,7 @@ function Login() {
 
       if (response.ok) {
         const data = await response.json();
-        const loggedInUser = data.user;
+        const loggedInUser = data.userData;
         localStorage.setItem("id", loggedInUser.id);
         localStorage.setItem("user", loggedInUser);
         updateUser(loggedInUser);

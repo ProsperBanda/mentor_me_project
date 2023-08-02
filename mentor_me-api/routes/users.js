@@ -2,6 +2,7 @@ import express from "express";
 import bcrypt from "bcrypt";
 import { User } from "../models/user.js";
 import { Op } from "sequelize";
+import axios from "axios";
 
 const router = express.Router();
 
@@ -55,12 +56,37 @@ router.post("/users/login", async (req, res) => {
     if (!isValidPassword) {
       return res.status(401).json({ error: "Invalid username or password" });
     }
+
+    //Logic to interact with the Chat Engine
+    let chatEngineResponse;
+    try {
+      chatEngineResponse = await axios.put(
+        "https://api.chatengine.io/users/",
+        {
+          username: user.username,
+          secret: user.username,
+          first_name: user.username,
+        },
+        { headers: { "Private-Key": "6b97a1d8-04ed-44ab-b012-bb101e8f909b" } }
+      );
+    } catch (chatEngineError) {
+      console.error("Chat Engine error:", chatEngineError);
+      return res
+        .status(500)
+        .json({
+          error: "Chat Engine interaction failed",
+          details: chatEngineError.response
+            ? chatEngineError.response.data
+            : undefined,
+        });
+    }
+
     req.session.user = user;
 
     newUserObj.id = user.id;
     Object.seal(newUserObj);
 
-    res.json({ user });
+    res.json({ userData: user, chatEngineData: chatEngineResponse.data });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });
