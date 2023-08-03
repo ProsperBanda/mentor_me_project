@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { ChatEngine } from "react-chat-engine";
 import {
   useMultiChatLogic,
   MultiChatSocket,
@@ -9,22 +8,18 @@ import {
 const Chat = () => {
   const userJSON = localStorage.getItem("user");
   const userObject = JSON.parse(userJSON);
-  console.log("User Object: ", userObject);
-  const [userData, setUserData] = useState(null);
-  const [chatEngineData, setChatEngineData] = useState(null);
-
-  const chatProps = useMultiChatLogic(
-    "5ee9af19-e706-4669-8226-547930062b19",
-    userObject.username,
-    userObject.username
-  );
+  const projectId = "5ee9af19-e706-4669-8226-547930062b19";
+  const username = userObject.username;
+  const secret = userObject.username;
+  const chatProps = useMultiChatLogic(projectId, username, secret);
+  console.log("I am rendering");
 
   return (
-    <div style={{ height: "100vh" }}>
+    <>
       <MultiChatSocket {...chatProps} />
-      <MultiChatWindow {...chatProps} style={{ height: "100%" }} />
-    </div>
+      <MultiChatWindow {...chatProps} style={{ height: "100vh" }} />
+    </>
   );
 };
 
-export default Chat;
+export default React.memo(Chat);

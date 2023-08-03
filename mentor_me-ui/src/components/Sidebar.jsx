@@ -37,7 +37,10 @@ const SideBar = () => {
         </div>
       )}
       {showChat && (
-        <div className="chat-popup">
+        <div
+          className="chat-popup"
+          style={{ display: showChat ? "block" : "none" }}
+        >
           <button className="back-arrow" onClick={handleChatClick}>
             ⬅
           </button>

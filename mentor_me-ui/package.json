@@ -17,6 +17,7 @@
     "react": "^18.2.0",
     "react-chat-engine": "^1.11.28",
     "react-chat-engine-advanced": "^0.1.28",
+    "react-chat-engine-pretty": "^0.1.8",
     "react-dom": "^18.2.0",
     "react-dropdown-select": "^4.9.4",
     "react-router-dom": "^6.14.1",
