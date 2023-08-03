@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@emailjs/browser": "^3.11.0",
+    "animate.css": "^4.1.1",
     "fs": "^0.0.1-security",
     "install": "^0.13.0",
     "npm": "^9.8.1",

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { socket } from "../client.js";
 import emailjs from "@emailjs/browser";
+import "./MenteeCard.css";
 
 const MenteeCard = ({ mentee }) => {
   const { id, Status, username, school, major, classification, bio } = mentee;
@@ -69,10 +70,10 @@ const MenteeCard = ({ mentee }) => {
       <img src="" alt="Mentee" />
       <h3>{username}</h3>
       <p>bio: {bio}</p>
-      <p>Major: {major}</p>
-      <p>School: {school}</p>
+      <p>Major: {major} 📚</p>
+      <p>School: {school} 🎓🏫</p>
       <p>Status: {status}</p>
-      <p>Classification: {classification}</p>
+      <p>Classification: {classification} ✍🏼</p>
       {status === "Pending" && (
         <>
           <button onClick={handleAcceptRequest}>Accept</button>
