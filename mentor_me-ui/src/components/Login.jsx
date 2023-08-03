@@ -29,7 +29,7 @@ function Login() {
         const data = await response.json();
         const loggedInUser = data.userData;
         localStorage.setItem("id", loggedInUser.id);
-        localStorage.setItem("user", loggedInUser);
+        localStorage.setItem("user", JSON.stringify(loggedInUser));
         updateUser(loggedInUser);
 
         socket.emit("user_connected", { userID: loggedInUser.id });

@@ -43,3 +43,16 @@
   cursor: pointer;
   padding: 10px;
 }
+
+.chat-popup {
+  position: fixed;
+  right: 100px;
+  top: 0;
+  width: 75%;
+  height: 100%;
+  background-color: #fff;
+  border-left: 1px solid #ccc;
+  overflow: auto;
+  transition: all 0.3s ease-in-out;
+  z-index: 1000;
+}
