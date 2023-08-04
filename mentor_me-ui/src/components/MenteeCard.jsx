@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { socket } from "../client.js";
 import emailjs from "@emailjs/browser";
-import "./MenteeCard.css";
+import Card from "./Card";
 
 const MenteeCard = ({ mentee }) => {
   const { id, Status, username, school, major, classification, bio } = mentee;
@@ -84,21 +84,21 @@ const MenteeCard = ({ mentee }) => {
     }
   };
   return (
-    <div className="mentee-card">
-      <img src="" alt="Mentee" />
-      <h3>{username}</h3>
-      <p>bio: {bio}</p>
-      <p>Major: {major} 📚</p>
-      <p>School: {school} 🎓🏫</p>
+    <Card
+      username={username}
+      bio={bio}
+      major={major}
+      school={school}
+      classification={classification}
+    >
       <p>Status: {status}</p>
-      <p>Classification: {classification} ✍🏼</p>
       {status === "Pending" && (
         <>
           <button onClick={handleAcceptRequest}>Accept</button>
           <button onClick={handleDeclineRequest}>Decline</button>
         </>
       )}
-    </div>
+    </Card>
   );
 };
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { socket } from "../client.js";
 import emailjs from "@emailjs/browser";
-import "./MentorCard.css";
+import Card from "./Card";
 
 const MentorCard = ({ mentor }) => {
   const username = mentor.username;
@@ -75,17 +75,17 @@ const MentorCard = ({ mentor }) => {
     }
   };
   return (
-    <div className="mentor-card">
-      <img src="" alt="Mentor" />
-      <h3>{username}</h3>
-      <p>bio: {bio}</p>
-      <p>Major: {major}📚</p>
-      <p>School: {school}🎓🏫</p>
-      <p>Classification: {classification}✍🏼</p>
+    <Card
+      username={username}
+      bio={bio}
+      major={major}
+      school={school}
+      classification={classification}
+    >
       <button onClick={handleMentorshipRequest} disabled={isButtonDisabled}>
         {requestStatus}
       </button>
-    </div>
+    </Card>
   );
 };
 
