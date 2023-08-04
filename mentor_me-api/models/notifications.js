@@ -14,7 +14,6 @@ export const notifications = sequelize.define("notifications", {
   },
 });
 
-//Associations
 User.hasMany(notifications, {
   as: "receivedNotifications",
   foreignKey: "receivingUserID",

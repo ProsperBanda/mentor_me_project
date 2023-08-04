@@ -11,7 +11,6 @@ import { socket } from "./client.js";
 
 function App() {
   const [user, setUser] = useState(() => {
-    // Retrieve the user data from storage or set it to null if not found
     const storedUser = localStorage.getItem("user");
     return storedUser ? JSON.parse(storedUser) : null;
   });
@@ -21,24 +20,18 @@ function App() {
   };
 
   useEffect(() => {
-    // Save the user data to storage whenever the user state changes
     localStorage.setItem("user", JSON.stringify(user));
   }, [user]);
   useEffect(() => {
     socket.on("new_request", () => {
-      console.log("The request was received!");
       new Notification("You have a new mentorship request!");
       alert("You have a new mentorship request!");
     });
     socket.on("request_accepted", () => {
-      console.log("The request has been accepted");
       new Notification("Your mentorship request has been responded to!");
       alert("Your mentorship request has been accepted!");
     });
-
-    //Cleaning up listeners when component unmounts
     return () => {
-      // socket.off("new_request");
       socket.off("request_accepted");
     };
   }, []);

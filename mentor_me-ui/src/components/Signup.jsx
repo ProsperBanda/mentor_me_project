@@ -30,10 +30,7 @@ function Signup() {
         setUsername("");
         setEmail("");
         setPassword("");
-
         updateUser(loggedInUser);
-
-        // Navigate to the login page after successful signup
         navigate("/");
       } else {
         alert("Signup failed");

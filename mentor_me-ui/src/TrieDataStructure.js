@@ -1,4 +1,3 @@
-// The Trie node class
 class TrieNode {
   constructor() {
     this.children = new Map();
@@ -6,13 +5,11 @@ class TrieNode {
   }
 }
 
-//Trie class
 class Trie {
   constructor() {
     this.root = new TrieNode();
   }
 
-  //Inserting a word into the trie
   insert(word) {
     let currentNode = this.root;
 
@@ -28,7 +25,6 @@ class Trie {
     currentNode.isTerminal = true;
   }
 
-  //Searching for words matching the given prefix
   search(prefix) {
     let currentNode = this.root;
     const results = [];
@@ -48,7 +44,6 @@ class Trie {
     return results;
   }
 
-  //Function to collect words fromthe Trie
   collectWords(node, prefix, results) {
     if (node.isTerminal) {
       results.push(prefix);

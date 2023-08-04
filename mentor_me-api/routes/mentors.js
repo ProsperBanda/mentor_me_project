@@ -28,7 +28,6 @@ router.get("/mentors", async (req, res) => {
       ],
     });
 
-    // If menteeID is provided, fetch request status
     const mentorsWithStatus = menteeID
       ? await Promise.all(
           mentors.map(async (mentor) => {

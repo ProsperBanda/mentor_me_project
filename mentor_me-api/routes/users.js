@@ -8,7 +8,6 @@ const router = express.Router();
 
 let newUserObj = { id: null };
 
-// Route for user registration
 router.post("/users", async (req, res) => {
   const { username, password, email } = req.body;
 
@@ -42,7 +41,6 @@ router.post("/users", async (req, res) => {
   }
 });
 
-// Route for user login
 router.post("/users/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -57,7 +55,6 @@ router.post("/users/login", async (req, res) => {
       return res.status(401).json({ error: "Invalid username or password" });
     }
 
-    //Logic to interact with the Chat Engine
     let chatEngineResponse;
     try {
       chatEngineResponse = await axios.put(
@@ -71,14 +68,12 @@ router.post("/users/login", async (req, res) => {
       );
     } catch (chatEngineError) {
       console.error("Chat Engine error:", chatEngineError);
-      return res
-        .status(500)
-        .json({
-          error: "Chat Engine interaction failed",
-          details: chatEngineError.response
-            ? chatEngineError.response.data
-            : undefined,
-        });
+      return res.status(500).json({
+        error: "Chat Engine interaction failed",
+        details: chatEngineError.response
+          ? chatEngineError.response.data
+          : undefined,
+      });
     }
 
     req.session.user = user;
