@@ -1,46 +1,39 @@
 import React, { useState } from "react";
 import "./Sidebar.css";
-import Notifications from "./MenteeNotifications";
+import Notifications from "./Notifications";
 import Chat from "./Chat";
 
-const SideBar = () => {
+const Sidebar = ({ userType }) => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [showChat, setShowChat] = useState(false);
 
-  const handleChatClick = () => {
-    setShowChat(!showChat);
-  };
-
-  const handleNotificationsClick = () => {
+  const handleChatClick = () => setShowChat(!showChat);
+  const handleNotificationsClick = () =>
     setShowNotifications(!showNotifications);
-  };
 
   return (
-    <div className="sidebar">
+    <div className={userType + "-sidebar"}>
       <button className="sidebar-button" onClick={handleChatClick}>
         Chat
       </button>
       <button className="sidebar-button" onClick={handleNotificationsClick}>
         Notifications
       </button>
-      <button className="sidebar-button">Requests</button>
       {showNotifications && (
         <div className="notifications-popup">
           <button className="back-arrow" onClick={handleNotificationsClick}>
             ⬅
           </button>
           <Notifications
+            userType={userType}
             notifications={notifications}
             setNotifications={setNotifications}
           />
         </div>
       )}
       {showChat && (
-        <div
-          className="chat-popup"
-          style={{ display: showChat ? "block" : "none" }}
-        >
+        <div className="chat-popup">
           <button className="back-arrow" onClick={handleChatClick}>
             ⬅
           </button>
@@ -51,4 +44,4 @@ const SideBar = () => {
   );
 };
 
-export default SideBar;
+export default Sidebar;

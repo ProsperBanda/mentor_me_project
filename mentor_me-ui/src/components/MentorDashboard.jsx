@@ -1,7 +1,7 @@
 import React from "react";
 import MenteeGrid from "./MenteeGrid";
 import "./MentorDashboard.css";
-import MentorSideBar from "./MentorSidebar";
+import Sidebar from "./Sidebar";
 import NavBar from "./NavBar";
 
 const MentorDashboard = () => {
@@ -9,7 +9,7 @@ const MentorDashboard = () => {
     <div className="mentor-dashboard">
       <main>
         <NavBar />
-        <MentorSideBar />
+        <Sidebar userType="mentor" />
         <MenteeGrid />
       </main>
     </div>

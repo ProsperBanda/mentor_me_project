@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import NavBar from "./NavBar";
 import Search from "./Search";
-import SideBar from "./Sidebar";
+import Sidebar from "./Sidebar";
 import MentorGrid from "./MentorGrid";
 import "./MenteeDashboard.css";
 
@@ -32,7 +32,7 @@ const MenteeDashboard = () => {
         onMajorChange={handleMajorChange}
         onClassificationChange={handleClassificationChange}
       />
-      <SideBar />
+      <Sidebar userType="mentee" />
       <div className="dashboard-content">
         <MentorGrid
           selectedMajor={selectedMajor}

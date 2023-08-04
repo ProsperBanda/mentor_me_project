@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { socket } from "../client.js";
 import axios from "axios";
 
-const Notifications = ({ notifications, setNotifications }) => {
+const Notifications = ({ userType, notifications, setNotifications }) => {
   const fetchNotifications = async () => {
     try {
       const userID = localStorage.getItem("id");
@@ -14,29 +14,32 @@ const Notifications = ({ notifications, setNotifications }) => {
       console.error("Failed to fetch notifications:", error);
     }
   };
+
   useEffect(() => {
     fetchNotifications();
-    const handleAccept = (data) => {
-      console.log("DATA:", data);
+
+    const handleEvent = (eventName, data) => {
       setNotifications((prevNotifications) => [
         ...prevNotifications,
         data.notification,
       ]);
     };
 
-    socket.on("request_accepted", handleAccept);
+    const event = userType === "mentor" ? "new_request" : "request_accepted";
+    socket.on(event, handleEvent);
 
     return () => {
-      socket.off("new_request", handleAccept);
+      socket.off(event, handleEvent);
     };
   }, [setNotifications]);
+
   return (
     <div className="notifications-content">
       <h3>Notifications</h3>
       {notifications.map((notification, index) => (
         <p key={index}>
-          Notification {index + 1}: {notification.content}, by{" "}
-          {notification.sender.username}
+          Notification {index + 1}: {notification.content},{" "}
+          {userType === "mentor" ? "from" : "by"} {notification.sender.username}
         </p>
       ))}
     </div>
