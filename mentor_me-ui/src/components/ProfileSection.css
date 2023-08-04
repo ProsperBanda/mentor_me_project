@@ -68,3 +68,14 @@ button[type="submit"]:focus {
 .dropdown-menu li:hover {
   background-color: #80ca83;
 }
+
+.account-type-select {
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 28px;
+  font-style: normal;
+  width: 722px;
+  height: 62px;
+}

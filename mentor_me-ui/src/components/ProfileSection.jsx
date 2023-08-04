@@ -18,13 +18,15 @@ const ProfileSection = () => {
   const [classificationSuggestions, setClassificationSuggestions] = useState(
     []
   );
-
   const [bio, setBio] = useState("");
   const maxSuggestions = 5;
   const schoolTrie = new Trie();
   const majorTrie = new Trie();
   const accountTypeTrie = new Trie();
   const classificationTrie = new Trie();
+  const isNewWord = (word, trie) => {
+    return word && !trie.search(word).includes(word);
+  };
 
   const addNewWordToJSON = async (word, field) => {
     try {
@@ -117,6 +119,13 @@ const ProfileSection = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
+    const reset = () => {
+      setSchool("");
+      setMajor("");
+      setAccountType("");
+      setClassification("");
+      setBio("");
+    };
     e.preventDefault();
 
     if (!"Notification" in window) {
@@ -128,28 +137,17 @@ const ProfileSection = () => {
     }
 
     try {
-      if (school && !schoolTrie.search(school).includes(school)) {
+      if (isNewWord(school, schoolTrie)) {
         addNewWord(school, "school");
         addNewWordToJSON(school, "schools");
       }
 
-      if (major && !majorTrie.search(major).includes(major)) {
+      if (isNewWord(major, majorTrie)) {
         addNewWord(major, "major");
         addNewWordToJSON(major, "major");
       }
 
-      if (
-        accountType &&
-        !accountTypeTrie.search(accountType).includes(accountType)
-      ) {
-        addNewWord(accountType, "accountType");
-        addNewWordToJSON(accountType, "accountType");
-      }
-
-      if (
-        classification &&
-        !classificationTrie.search(classification).includes(classification)
-      ) {
+      if (isNewWord(classification, classificationTrie)) {
         addNewWord(classification, "classification");
         addNewWordToJSON(classification, "classification");
       }
@@ -179,11 +177,7 @@ const ProfileSection = () => {
     } catch (error) {
       console.error("Error: ", error);
     }
-    setSchool("");
-    setMajor("");
-    setAccountType("");
-    setClassification("");
-    setBio("");
+    reset();
   };
 
   return (
@@ -240,29 +234,15 @@ const ProfileSection = () => {
         </div>
         <div>
           <label htmlFor="accountType">Account Type:</label>
-          <input
-            type="text"
+          <select
             id="accountType"
+            className="account-type-select"
             value={accountType}
-            onChange={(e) => handleInputChange(e, "accountType")}
-          />
-          {accountTypeSuggestions.length > 0 && (
-            <ul className="dropdown-menu">
-              {accountTypeSuggestions
-                .slice(0, maxSuggestions)
-                .map((suggestion) => (
-                  <li
-                    key={suggestion}
-                    onClick={() => {
-                      setAccountType(suggestion);
-                      setAccountTypeSuggestions([]);
-                    }}
-                  >
-                    {suggestion}
-                  </li>
-                ))}
-            </ul>
-          )}
+            onChange={(e) => setAccountType(e.target.value)}
+          >
+            <option value="Mentor">Mentor</option>
+            <option value="Mentee">Mentee</option>
+          </select>
         </div>
         <div>
           <label htmlFor="classification">Classification:</label>
