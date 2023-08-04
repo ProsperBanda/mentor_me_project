@@ -1,4 +1,4 @@
-.mentor-card {
+.card {
   background-color: #b8dfcd;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -11,7 +11,7 @@
   transition: transform 0.3s ease;
 }
 
-.mentor-card img {
+.card img {
   border-radius: 50%;
   width: 100px;
   height: 100px;
@@ -19,19 +19,19 @@
   margin-bottom: 15px;
 }
 
-.mentor-card h3 {
+.card h3 {
   color: #1b1a1a;
   font-size: 18px;
   margin-bottom: 10px;
 }
 
-.mentor-card p {
+.card p {
   color: #1b1a1a;
   font-size: 14px;
   margin-bottom: 10px;
 }
 
-.mentor-card button {
+.card button {
   background-color: #007bff;
   color: white;
   border: none;
@@ -46,7 +46,7 @@
   transition: background-color 0.3s ease;
 }
 
-.mentor-card:hover {
+.card:hover {
   transform: translateY(-10px) scale(1.05);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
