@@ -13,6 +13,7 @@ const MenteeCard = ({ mentee }) => {
   const [menteeName, setMenteeName] = useState(null);
   const mentor = JSON.parse(localStorage.getItem("user"));
   const [status, setStatus] = useState(mentee.Status);
+  const projectId = import.meta.env.VITE_REACT_APP_CE_PROJECT_ID;
 
   useEffect(() => {
     axios
@@ -30,6 +31,22 @@ const MenteeCard = ({ mentee }) => {
         console.error("Failed to fetch users:", error);
       });
   }, [mentee]);
+
+  function createChat() {
+    axios
+      .put(
+        "https://api.chatengine.io/chats/",
+        { usernames: [mentor.username, menteeName], is_direct_chat: true },
+        {
+          headers: {
+            "Project-ID": projectId,
+            "User-Name": username,
+            "User-Secret": username,
+          },
+        }
+      )
+      .catch((e) => console.log("create chat error", e));
+  }
 
   const handleAcceptRequest = async () => {
     const mentorName = mentor.username;
@@ -53,6 +70,7 @@ const MenteeCard = ({ mentee }) => {
         );
       }
       setStatus("Accepted");
+      createChat();
     } catch (error) {
       console.error("Error accepting mentorship request:", error);
     }
