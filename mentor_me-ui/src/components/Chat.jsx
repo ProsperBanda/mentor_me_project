@@ -3,12 +3,11 @@ import { ChatEngine } from "react-chat-engine";
 import axios from "axios";
 
 const Chat = () => {
-  {
-    const projectId = import.meta.env.VITE_REACT_APP_CE_PROJECT_ID;
-    const userJSON = localStorage.getItem("user");
-    const userObject = JSON.parse(userJSON);
-    const username = userObject.username;
-  }
+  const projectId = import.meta.env.VITE_REACT_APP_CE_PROJECT_ID;
+  const userJSON = localStorage.getItem("user");
+  const userObject = JSON.parse(userJSON);
+  const username = userObject.username;
+
   function getOrCreateUser() {
     axios
       .put(
