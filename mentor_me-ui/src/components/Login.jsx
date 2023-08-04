@@ -3,7 +3,6 @@ import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../UserContext.js";
 import { socket } from "../client.js";
-import axios from "axios";
 
 function Login() {
   const [email, setEmail] = useState("");

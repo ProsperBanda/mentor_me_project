@@ -7,12 +7,9 @@ import { notifications } from "../models/notifications.js";
 const router = express.Router();
 let connections = [];
 
-//Route to handle accepting a mentorship request
 router.post("/:requestID/accept", async (req, res) => {
   try {
     const { requestID } = req.params;
-    console.log("RequestID:", requestID);
-
     const request = await mentorshipRequest.findByPk(requestID);
 
     if (!request) {
@@ -29,8 +26,6 @@ router.post("/:requestID/accept", async (req, res) => {
       sendingUserID: request.MentorID,
     });
 
-    //If the mentee is online, send them a notification
-    console.log("OnlineUsers on Response: ", onlineUsers);
     if (request.MenteeID in onlineUsers) {
       io.to(onlineUsers[request.MenteeID]).emit("request_accepted", {
         mentorID: request.MentorID,
@@ -39,12 +34,10 @@ router.post("/:requestID/accept", async (req, res) => {
       });
     }
 
-    //Store connected mentor<>mentee
     connections.push({
       mentorID: request.MentorID,
       menteeID: request.MenteeID,
     });
-    console.log(connections);
     const response = await mentorshipResponse.create({
       requestID: requestID,
       Status: "Accepted",
@@ -57,7 +50,6 @@ router.post("/:requestID/accept", async (req, res) => {
   }
 });
 
-//Route to handle declining a request
 router.post("/:requestID/decline", async (req, res) => {
   try {
     const { requestID } = req.params;

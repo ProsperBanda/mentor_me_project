@@ -11,8 +11,6 @@ import SequelizeStoreInit from "connect-session-sequelize";
 import { User, userProfile } from "./models/index.js";
 import mentorsRoute from "./routes/mentors.js";
 import requestsRoute from "./routes/requests.js";
-import mentorshipResponse from "./models/mentorshipResponse.js";
-import mentorshipRequest from "./models/mentorshipRequest.js";
 import mentorshipRequestRoutes from "./routes/mentorshipRequestRoute.js";
 import mentorshipResponseRoutes, {
   connections,
@@ -32,7 +30,6 @@ const io = new Server(server, {
 
 let onlineUsers = {};
 
-// Socket.io connection setup
 io.on("connection", (socket) => {
   socket.on("user_connected", (userID) => {
     socket.data.userid = userID.userID;
@@ -60,14 +57,7 @@ io.on("connection", (socket) => {
         });
       }
     });
-
-    // Logging the onlineUsers object
-    console.log("OnlineUsers:", onlineUsers);
-    console.log("Connections: ", connections);
   });
-  console.log("Socket ID: ", socket.id);
-  console.log("OnlineUsers: ", onlineUsers);
-  console.log(`New client connected ${socket.id}`);
 
   socket.on("disconnect", () => {
     delete onlineUsers[

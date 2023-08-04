@@ -30,10 +30,7 @@ function Signup() {
         setUsername("");
         setEmail("");
         setPassword("");
-
         updateUser(loggedInUser);
-
-        // Navigate to the login page after successful signup
         navigate("/");
       } else {
         alert("Signup failed");
@@ -44,58 +41,66 @@ function Signup() {
   };
 
   return (
-    <div className="content">
-      <h1>Sign Up</h1>
-      <p className="welcome">Enter your information below</p>
-      <div className="user-information">
-        <form action="" onSubmit={handleSubmit}>
-          <div className="user-name">
-            <label htmlFor="name">
-              <strong>Full Name</strong>
-            </label>
-            <input
-              type="text"
-              placeholder="Enter Your Name"
-              value={username}
-              name="name"
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-          </div>
-          <div className="user-email">
-            <label htmlFor="email">
-              <strong>Email</strong>
-            </label>
-            <input
-              type="email"
-              placeholder="Enter Email"
-              value={email}
-              name="email"
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className="user-password">
-            <label htmlFor="password">
-              <strong>Password</strong>
-            </label>
-            <input
-              type="password"
-              placeholder="Enter Password"
-              value={password}
-              name="password"
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <button type="submit" className="btn-success">
-            Sign up
-          </button>
-          <p>You agree to our terms and policies</p>
-          <Link to="/" className="login-btn">
-            Login
-          </Link>
-        </form>
+    <div className="wrapper">
+      <div className="content">
+        <h1>Sign Up ✍🏼</h1>
+        <p className="welcome">Enter your information below</p>
+        <div className="user-information">
+          <form action="" onSubmit={handleSubmit}>
+            <div className="user-name">
+              <label htmlFor="name">
+                <strong>Full Name</strong>
+              </label>
+              <input
+                type="text"
+                placeholder="Enter Your Name"
+                value={username}
+                name="name"
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+            </div>
+            <div className="user-email">
+              <label htmlFor="email">
+                <strong>Email</strong>
+              </label>
+              <input
+                type="email"
+                placeholder="Enter Email"
+                value={email}
+                name="email"
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="user-password">
+              <label htmlFor="password">
+                <strong>Password</strong>
+              </label>
+              <input
+                type="password"
+                placeholder="Enter Password"
+                value={password}
+                name="password"
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <button type="submit" className="btn-success">
+              Sign up
+            </button>
+            <p>You agree to our terms and policies</p>
+            <Link to="/" className="login-btn">
+              Login
+            </Link>
+          </form>
+        </div>
+      </div>
+      <div className="image-container">
+        <img
+          src="https://www.genesecloud.academy/wp-content/uploads/2021/02/mentor-1.svg"
+          alt="Mentorship"
+        />
       </div>
     </div>
   );
