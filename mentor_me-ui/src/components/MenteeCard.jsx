@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { socket } from "../client.js";
 import emailjs from "@emailjs/browser";
+import "./MenteeCard.css";
 
 const MenteeCard = ({ mentee }) => {
   const { id, Status, username, school, major, classification, bio } = mentee;
@@ -11,6 +12,8 @@ const MenteeCard = ({ mentee }) => {
   );
   const [menteeName, setMenteeName] = useState(null);
   const mentor = JSON.parse(localStorage.getItem("user"));
+  const [status, setStatus] = useState(mentee.Status);
+  const projectId = import.meta.env.VITE_REACT_APP_CE_PROJECT_ID;
 
   useEffect(() => {
     axios
@@ -28,6 +31,22 @@ const MenteeCard = ({ mentee }) => {
         console.error("Failed to fetch users:", error);
       });
   }, [mentee]);
+
+  function createChat() {
+    axios
+      .put(
+        "https://api.chatengine.io/chats/",
+        { usernames: [mentor.username, menteeName], is_direct_chat: true },
+        {
+          headers: {
+            "Project-ID": projectId,
+            "User-Name": username,
+            "User-Secret": username,
+          },
+        }
+      )
+      .catch((e) => console.log("create chat error", e));
+  }
 
   const handleAcceptRequest = async () => {
     const mentorName = mentor.username;
@@ -50,6 +69,8 @@ const MenteeCard = ({ mentee }) => {
           "2Q2IGBHUMYxrj09BR"
         );
       }
+      setStatus("Accepted");
+      createChat();
     } catch (error) {
       console.error("Error accepting mentorship request:", error);
     }
@@ -57,6 +78,7 @@ const MenteeCard = ({ mentee }) => {
   const handleDeclineRequest = async () => {
     try {
       await axios.post(`http://localhost:3000/${id}/decline`);
+      setStatus("Declined");
     } catch (error) {
       console.error("Error declining mentorship request:", error);
     }
@@ -66,11 +88,11 @@ const MenteeCard = ({ mentee }) => {
       <img src="" alt="Mentee" />
       <h3>{username}</h3>
       <p>bio: {bio}</p>
-      <p>Major: {major}</p>
-      <p>School: {school}</p>
-      <p>Status: {Status}</p>
-      <p>Classification: {classification}</p>
-      {Status === "Pending" && (
+      <p>Major: {major} 📚</p>
+      <p>School: {school} 🎓🏫</p>
+      <p>Status: {status}</p>
+      <p>Classification: {classification} ✍🏼</p>
+      {status === "Pending" && (
         <>
           <button onClick={handleAcceptRequest}>Accept</button>
           <button onClick={handleDeclineRequest}>Decline</button>

@@ -24,12 +24,22 @@ nav {
 }
 
 .profile-info img {
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-top: 30px;
 }
 
 .logo {
   width: 100px;
-  height: 50px;
+  height: 100px;
+  border-radius: 50%;
+  margin-top: 30px;
+}
+
+.profile-text {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-weight: bold;
+  font-style: italic;
+  font-size: 25px;
 }

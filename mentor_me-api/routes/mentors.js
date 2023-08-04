@@ -5,41 +5,43 @@ import mentorshipRequest from "../models/mentorshipRequest.js";
 
 const router = express.Router();
 
-// GET mentors endpoint with the filter parameters
 router.get("/mentors", async (req, res) => {
   try {
     const { major, classification, menteeID } = req.query;
-    const filters = {};
+
+    let userProfileWhere = { accountType: "Mentor" };
+
     if (major) {
-      filters.major = major;
+      userProfileWhere.major = major;
     }
     if (classification) {
-      filters.classification = classification;
+      userProfileWhere.classification = classification;
     }
 
     const mentors = await User.findAll({
-      where: filters,
       include: [
         {
           model: userProfile,
           as: "userprofile",
-          where: { accountType: "Mentor" },
+          where: userProfileWhere,
         },
       ],
     });
 
-    // Iterate through mentors and fetch the request status for each mentor
-    const mentorsWithStatus = await Promise.all(
-      mentors.map(async (mentor) => {
-        const request = await mentorshipRequest.findOne({
-          where: { MentorID: mentor.id, MenteeID: menteeID },
-        });
-        return {
-          ...mentor.get(),
-          requestStatus: request ? request.Status : "Send Request",
-        };
-      })
-    );
+    // If menteeID is provided, fetch request status
+    const mentorsWithStatus = menteeID
+      ? await Promise.all(
+          mentors.map(async (mentor) => {
+            const request = await mentorshipRequest.findOne({
+              where: { MentorID: mentor.id, MenteeID: menteeID },
+            });
+            return {
+              ...mentor.get(),
+              requestStatus: request ? request.Status : "Send Request",
+            };
+          })
+        )
+      : mentors;
 
     res.json(mentorsWithStatus);
   } catch (error) {

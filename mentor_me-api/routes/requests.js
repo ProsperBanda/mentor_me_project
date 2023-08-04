@@ -8,7 +8,9 @@ const router = express.Router();
 //Route to fetch all mentorship requests
 router.get("/mentorship-requests", async (req, res) => {
   try {
+    const { mentorID } = req.query;
     const mentorshipRequests = await mentorshipRequest.findAll({
+      where: { MentorID: mentorID },
       include: [
         {
           model: User,

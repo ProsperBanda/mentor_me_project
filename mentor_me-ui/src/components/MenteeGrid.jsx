@@ -5,14 +5,17 @@ import axios from "axios";
 
 const MenteeGrid = () => {
   const [mentorshipRequests, setMentorshipRequests] = useState([]);
+  const mentorID = localStorage.getItem("id");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchMentorshipRequests = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/mentorship-requests"
+          `http://localhost:3000/mentorship-requests?mentorID=${mentorID}`
         );
         setMentorshipRequests(response.data);
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching mentorship requests:", error);
       }
@@ -21,26 +24,32 @@ const MenteeGrid = () => {
   }, []);
   return (
     <div className="mentee-grid">
-      {mentorshipRequests.map((request) => {
-        const { Status, id, User } = request;
-        const { username, email, userprofile } = User;
-        const { school, major, classification, bio } = userprofile;
-        return (
-          <MenteeCard
-            key={id}
-            mentee={{
-              Status,
-              id,
-              username,
-              email,
-              school,
-              major,
-              classification,
-              bio,
-            }}
-          />
-        );
-      })}
+      {isLoading
+        ? Array(9)
+            .fill(null)
+            .map((_, index) => (
+              <div key={index} className="mentee-card placeholder"></div>
+            ))
+        : mentorshipRequests.map((request) => {
+            const { Status, id, User } = request;
+            const { username, email, userprofile } = User;
+            const { school, major, classification, bio } = userprofile;
+            return (
+              <MenteeCard
+                key={id}
+                mentee={{
+                  Status,
+                  id,
+                  username,
+                  email,
+                  school,
+                  major,
+                  classification,
+                  bio,
+                }}
+              />
+            );
+          })}
     </div>
   );
 };
