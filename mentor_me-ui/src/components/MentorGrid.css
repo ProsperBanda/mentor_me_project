@@ -1,4 +1,4 @@
-.mentor-grid {
+/* .mentor-grid {
   display: grid;
   grid-template-columns: 250px 250px 250px;
   grid-auto-rows: 250px;
@@ -8,4 +8,40 @@
   align-items: center;
   justify-content: center;
   gap: 80px;
+} */
+
+.mentor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 20px;
+  padding: 20px;
+  background-color: #f0f0f0;
+}
+
+.mentor-card.placeholder {
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 333.33px;
+  height: 435px;
+  background: linear-gradient(
+    90deg,
+    rgba(150, 148, 148, 0.5) 25%,
+    rgba(240, 240, 240, 0.5) 50%,
+    rgba(220, 220, 220, 0.5) 75%
+  );
+  background-size: 200% 100%;
+  animation: loading 5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
