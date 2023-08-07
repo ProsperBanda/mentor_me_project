@@ -56,17 +56,17 @@
 
 ## User Stories
 
-- [ ] A user can create an account and log into their account.
-- [ ] User can complete their profile as a mentor or mentee. As they complete the profile, the process should have an autocomplete functionality
-- [ ] Mentees can send mentorship requests to mentors.
-- [ ] Mentors can accept or decline the list of mentorship requests
-- [ ] Notifications
-  - [ ] A mentee receives a browser push notification when their request was accepted or declined
-  - [ ] A mentor receives a browser push notification when they receive a request from a mentee
-  - [ ] A matched mentee<>mentor pairing receives a browser push notification when the other party logs in
-  - [ ] Inside the dashboard, user can see their notifications under the notification section
-  - [ ] Fail-state handling: If the browser does not support notifications, or the user did not give permissions, or the other party is offline, send the notifications via email instead.
-- [ ] Connected mentors and mentees should be able to chat directly through the chat.
+- [x] A user can create an account and log into their account.
+- [x] User can complete their profile as a mentor or mentee. As they complete the profile, the process should have an autocomplete functionality
+- [x] Mentees can send mentorship requests to mentors.
+- [x] Mentors can accept or decline the list of mentorship requests
+- [x] Notifications
+  - [x] A mentee receives a browser push notification when their request was accepted or declined
+  - [x] A mentor receives a browser push notification when they receive a request from a mentee
+  - [x] A matched mentee<>mentor pairing receives a browser push notification when the other party logs in
+  - [x] Inside the dashboard, user can see their notifications under the notification section
+  - [x] Fail-state handling: If the browser does not support notifications, or the user did not give permissions, or the other party is offline, send the notifications via email instead.
+- [x] Connected mentors and mentees should be able to chat directly through the chat.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
