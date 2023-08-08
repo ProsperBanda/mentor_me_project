@@ -22,4 +22,10 @@ export const userProfile = sequelize.define("userProfile", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  imageUrl: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    defaultValue:
+      "https://png.pngtree.com/png-clipart/20200224/original/pngtree-businessman-avatar-icon-flat-style-png-image_5230185.jpg",
+  },
 });

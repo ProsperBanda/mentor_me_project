@@ -43,3 +43,33 @@ nav {
   font-style: italic;
   font-size: 25px;
 }
+
+.image-picker-modal {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: 999;
+  border: 1px solid #e0e0e0;
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  width: 340px;
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  gap: 10px;
+}
+
+.image-picker-modal img {
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+}
+
+.profile-info img:hover {
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
