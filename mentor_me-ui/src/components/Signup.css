@@ -36,3 +36,22 @@ form {
   margin: auto;
   padding: 30px;
 }
+
+.content input {
+  border: 3px solid transparent;
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0.5)
+    ),
+    linear-gradient(21deg, #df972c, #1beabd);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  padding: 1px;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.content input:focus {
+  border-width: 4px;
+  background-size: 100% 100%, 100% 100%;
+}

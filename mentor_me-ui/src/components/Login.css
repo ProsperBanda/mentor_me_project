@@ -77,15 +77,17 @@ form {
 .welcome-text {
   font-weight: bold;
   font-size: 50px;
-  animation: slideDown 1s ease-out forwards;
+  animation: slideDown 2s ease-out;
+  animation-iteration-count: 2;
 }
 
 @keyframes slideDown {
-  0% {
+  0%,
+  100% {
     transform: translateY(-100%);
     opacity: 0;
   }
-  100% {
+  50% {
     transform: translateY(0);
     opacity: 1;
   }
