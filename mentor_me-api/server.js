@@ -181,6 +181,25 @@ app.get("/notifications/:userID", async (req, res) => {
   }
 });
 
+app.put("/notifications/:notificationID/read", async (req, res) => {
+  try {
+    const { notificationID } = req.params;
+
+    const notification = await notifications.findByPk(notificationID);
+    if (!notification) {
+      return res.status(404).json({ error: "Notification not found" });
+    }
+
+    notification.status = "Read";
+    await notification.save();
+
+    res.json({ message: "Notification marked as read" });
+  } catch (error) {
+    console.error("Error marking notification as read:", error);
+    res.status(500).json({ error: "Failed to mark notification as read" });
+  }
+});
+
 sequelize
   .sync({ alter: true })
   .then(() => {
