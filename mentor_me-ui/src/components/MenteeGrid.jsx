@@ -11,6 +11,7 @@ const MenteeGrid = () => {
   useEffect(() => {
     const fetchMentorshipRequests = async () => {
       try {
+        await new Promise((resolve) => setTimeout(resolve, 2000));
         const response = await axios.get(
           `http://localhost:3000/mentorship-requests?mentorID=${mentorID}`
         );
@@ -18,6 +19,7 @@ const MenteeGrid = () => {
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching mentorship requests:", error);
+        setIsLoading(false);
       }
     };
     fetchMentorshipRequests();
