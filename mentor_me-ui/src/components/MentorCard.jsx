@@ -6,7 +6,7 @@ import Card from "./Card";
 
 const MentorCard = ({ mentor }) => {
   const username = mentor.username;
-  const { school, major, classification, bio } = mentor.userprofile;
+  const { school, major, classification, bio, imageUrl } = mentor.userprofile;
 
   const [requestStatus, setRequestStatus] = useState(
     mentor.requestStatus || "Request"
@@ -81,6 +81,7 @@ const MentorCard = ({ mentor }) => {
       major={major}
       school={school}
       classification={classification}
+      imageUrl={imageUrl}
     >
       <button onClick={handleMentorshipRequest} disabled={isButtonDisabled}>
         {requestStatus}

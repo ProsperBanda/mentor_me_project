@@ -8,10 +8,11 @@ const Card = ({
   major,
   school,
   classification,
+  imageUrl,
   children,
 }) => (
   <div className="card">
-    <img src={image || ""} alt={username} />
+    <img src={imageUrl} alt={username} />
     <h3>{username}</h3>
     <p>Bio: {bio}</p>
     <p>Major: {major} 📚</p>

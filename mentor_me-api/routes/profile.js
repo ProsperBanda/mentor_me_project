@@ -6,7 +6,8 @@ const router = express.Router();
 
 router.post("/profile", async (req, res) => {
   try {
-    const { school, major, accountType, classification, bio } = req.body;
+    const { school, major, accountType, classification, bio, imageUrl } =
+      req.body;
     const userId = newUserObj.id;
     const newProfile = await userProfile.create({
       school,
@@ -15,6 +16,7 @@ router.post("/profile", async (req, res) => {
       classification,
       bio,
       userId,
+      imageUrl,
     });
     res.json({ profile: newProfile });
   } catch (error) {
@@ -43,9 +45,10 @@ router.get("/profile/:id", async (req, res) => {
 router.put("/profile/:id", async (req, res) => {
   try {
     const profileId = req.params.id;
-    const { school, major, accountType, classification, bio } = req.body;
+    const { school, major, accountType, classification, bio, imageUrl } =
+      req.body;
     const updatedProfile = await userProfile.update(
-      { school, major, accountType, classification, bio },
+      { school, major, accountType, classification, bio, imageUrl },
       { where: { id: profileId } }
     );
     if (updatedProfile[0] === 0) {

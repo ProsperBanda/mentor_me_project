@@ -33,7 +33,8 @@ const MenteeGrid = () => {
         : mentorshipRequests.map((request) => {
             const { Status, id, User } = request;
             const { username, email, userprofile } = User;
-            const { school, major, classification, bio } = userprofile;
+            const { school, major, classification, bio, imageUrl } =
+              userprofile;
             return (
               <MenteeCard
                 key={id}
@@ -46,6 +47,7 @@ const MenteeGrid = () => {
                   major,
                   classification,
                   bio,
+                  imageUrl,
                 }}
               />
             );

@@ -5,7 +5,8 @@ import emailjs from "@emailjs/browser";
 import Card from "./Card";
 
 const MenteeCard = ({ mentee }) => {
-  const { id, Status, username, school, major, classification, bio } = mentee;
+  const { id, Status, username, school, major, classification, bio, imageUrl } =
+    mentee;
   const [menteeEmail, setMenteeEmail] = useState(null);
   const notificationPermissionStatus = localStorage.getItem(
     "notificationPermission"
@@ -90,6 +91,7 @@ const MenteeCard = ({ mentee }) => {
       major={major}
       school={school}
       classification={classification}
+      imageUrl={imageUrl}
     >
       <p>Status: {status}</p>
       {status === "Pending" && (

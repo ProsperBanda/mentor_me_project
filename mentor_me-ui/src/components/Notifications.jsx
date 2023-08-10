@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { socket } from "../client.js";
 import axios from "axios";
+import "./Notifications.css";
 
 const Notifications = ({ userType, notifications, setNotifications }) => {
   const fetchNotifications = async () => {
@@ -15,9 +16,23 @@ const Notifications = ({ userType, notifications, setNotifications }) => {
     }
   };
 
+  const handleNotificationClick = async (notificationID) => {
+    try {
+      await axios.put(
+        `http://localhost:3000/notifications/${notificationID}/read`
+      );
+      setNotifications((prevNotifications) =>
+        prevNotifications.map((n) =>
+          n.id === notificationID ? { ...n, status: "Read" } : n
+        )
+      );
+    } catch (error) {
+      console.error("Failed to update notification status:", error);
+    }
+  };
+
   useEffect(() => {
     fetchNotifications();
-
     const handleEvent = (eventName, data) => {
       setNotifications((prevNotifications) => [
         ...prevNotifications,
@@ -37,7 +52,11 @@ const Notifications = ({ userType, notifications, setNotifications }) => {
     <div className="notifications-content">
       <h3>Notifications</h3>
       {notifications.map((notification, index) => (
-        <p key={index}>
+        <p
+          key={notification.id}
+          className={notification.status === "Read" ? "read-notification" : ""}
+          onClick={() => handleNotificationClick(notification.id)}
+        >
           Notification {index + 1}: {notification.content},{" "}
           {userType === "mentor" ? "from" : "by"} {notification.sender.username}
         </p>
